@@ -1,16 +1,26 @@
 var Game = function() {
   this.score = [];
+  this.totalScore = 0;
 }
 
 Game.prototype.entry = function(first, second = 0) {
   if (first + second > 10) {
-    throw ("scores cannot be a sum of over 10")
+    throw ("scores cannot be a sum of over 10");
   }
   if (arguments.length == 1 && first !== 10) {
-    throw ("single entries can only be strikes")
+    throw ("single entries can only be strikes");
   }
   if (this.score.length > 9) {
-    throw ("no more entries allowed as game over")
+    throw ("no more entries allowed as game over");
   }
   this.score.push([first, second]);
-};
+}
+
+Game.prototype.update = function() {
+  for (var i = 0; i < this.score.length; i++) {
+    for (var j = 0; j < this.score[i].length; j++) {
+      this.totalScore += this.score[i][j]
+    }
+  }
+  return this.totalScore;
+}

@@ -52,4 +52,15 @@ describe('Game', function() {
       }).toThrow("no more entries allowed as game over");
     });
   });
+  describe('#total', function() {
+    it('default score at start is zero', function() {
+      expect(game.totalScore).toEqual(0);
+    });
+  });
+  it('shows the current total score', function() {
+    game.entry(4, 5);
+    game.entry(3, 6);
+    game.update();
+    expect(game.totalScore).toEqual(18);
+  });
 });
