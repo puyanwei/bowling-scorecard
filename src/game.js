@@ -4,12 +4,19 @@ var Game = function() {
 }
 
 Game.prototype.entry = function(first, second = 0) {
-  if (first + second > 10) {
-    throw ("scores cannot be a sum of over 10");
-  }
   if (arguments.length == 1 && first !== 10) {
     throw ("single entries can only be strikes");
   }
+  if (first + second == 10) {
+    second = "/";
+  }
+  if (arguments.length == 1 && first == 10) {
+    first = "X", second = "";
+  }
+  if (first + second > 10) {
+    throw ("scores cannot be a sum of over 10");
+  }
+
   if (this.score.length > 9) {
     throw ("no more entries allowed as game over");
   }

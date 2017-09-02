@@ -29,13 +29,20 @@ describe('Game', function() {
     });
     it('throws an error if scores add up to over ten', function() {
       expect(function() {
-        game.entry(9, 5)
+        game.entry(9, 5);
       }).toThrow("scores cannot be a sum of over 10");
     });
-    it('single entrys are strikes', function() {
+    it('spares are marked with a /', function() {
+      game.entry(4, 6);
+      expect(game.score).toEqual(
+        [
+          [4, "/"]
+        ]);
+    });
+    it('single entrys are strikes, and marked with an X', function() {
       game.entry(10);
       expect(game.score).toEqual([
-        [10, 0]
+        ["X", ""]
       ])
     });
     it('single entrys are only strikes', function() {
