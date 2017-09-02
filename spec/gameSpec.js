@@ -32,17 +32,10 @@ describe('Game', function() {
         game.entry(9, 5);
       }).toThrow("scores cannot be a sum of over 10");
     });
-    it('spares are marked with a /', function() {
-      game.entry(4, 6);
-      expect(game.score).toEqual(
-        [
-          [4, "/"]
-        ]);
-    });
-    it('single entrys are strikes, and marked with an X', function() {
+    it('single entrys are strikes', function() {
       game.entry(10);
       expect(game.score).toEqual([
-        ["X", ""]
+        [10, ""]
       ])
     });
     it('single entrys are only strikes', function() {
@@ -63,11 +56,23 @@ describe('Game', function() {
     it('default score at start is zero', function() {
       expect(game.totalScore).toEqual(0);
     });
+
+    it('shows the current total score', function() {
+      game.entry(4, 5);
+      game.entry(3, 6);
+      game.update();
+      expect(game.totalScore).toEqual(18);
+    });
   });
-  it('shows the current total score', function() {
-    game.entry(4, 5);
-    game.entry(3, 6);
-    game.update();
-    expect(game.totalScore).toEqual(18);
+  describe('#display', function() {
+    it('converts the spares and strikes into symbols', function() {
+      game.entry(4, 6);
+      game.entry(10);
+      console.log(game.displayScore);
+      expect(game.displayScore).toEqual([
+        [4, "/"],
+        ["X", ""]
+      ]);
+    });
   });
 });
