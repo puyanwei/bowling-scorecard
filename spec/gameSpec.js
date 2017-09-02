@@ -1,13 +1,15 @@
 describe('Game', function() {
   var game;
+  var frame;
+
   beforeEach(function() {
     game = new Game();
+    frame = new Frame();
   })
 
-
-  describe('Jasmine works', function() {
-    it('jasmine works', function() {
-      expect().toEqual();
+  describe('#initialize', function() {
+    it('creates a new frame', function() {
+      expect(frame).toEqual(jasmine.any(Object));
     })
   })
 });
