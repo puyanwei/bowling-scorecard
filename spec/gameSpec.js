@@ -6,9 +6,19 @@ describe('Game', function() {
   })
 
   describe('#initialize', function() {
-    it('starts with an empty array at a new game', function() {
+    it('starts with an empty array called score at a new game', function() {
       expect(game.score).toEqual([]);
     })
+    it('has a frame number counter, which goes up by one each time you complete an entry', function() {
+      game.entry(4, 5);
+      expect(game.frameNumber).toEqual(1);
+      game.entry(3, 6);
+      expect(game.frameNumber).toEqual(2);
+      game.entry(4, 5);
+      expect(game.frameNumber).toEqual(3);
+      game.entry(3, 6);
+      expect(game.frameNumber).toEqual(4);
+    });
   });
 
   describe('#entry', function() {
@@ -52,27 +62,31 @@ describe('Game', function() {
       }).toThrow("no more entries allowed as game over");
     });
   });
-  describe('#total', function() {
-    it('default score at start is zero', function() {
-      expect(game.totalScore).toEqual(0);
-    });
-
-    it('shows the current total score', function() {
+  describe('#totalPerFrame', function() {
+    it('shows the current total score and puts into an array', function() {
       game.entry(4, 5);
+      console.log("FrameNo " + game.frameNumber);
+      console.log("RunScore " + game.runningScore);
+      console.log("FrameTot " + game.frameTotal);
       game.entry(3, 6);
-      game.update();
-      expect(game.totalScore).toEqual(18);
+      console.log("FrameNo " + game.frameNumber);
+      console.log("RunScore " + game.runningScore);
+      console.log("FrameTot " + game.frameTotal);
+      game.entry(4, 4);
+      console.log("FN " + game.frameNumber);
+      console.log("RS " + game.runningScore);
+      console.log("RT " + game.frameTotal);
+      expect(game.runningScore).toEqual([0, 9, 18, 26]);
     });
   });
-  describe('#display', function() {
-    it('converts the spares and strikes into symbols', function() {
-      game.entry(4, 6);
-      game.entry(10);
-      console.log(game.displayScore);
-      expect(game.displayScore).toEqual([
-        [4, "/"],
-        ["X", ""]
-      ]);
-    });
-  });
+  // describe('#show', function() {
+  //   it('converts the spares and strikes into symbols', function() {
+  //     game.entry(4, 6);
+  //     game.entry(10);
+  //     expect(game.displayScore).toEqual([
+  //       [4, "/"],
+  //       ["X", ""]
+  //     ]);
+  //   });
+  // });
 });
