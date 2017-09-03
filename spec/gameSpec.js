@@ -59,42 +59,31 @@ describe('Game', function() {
       }).toThrow("no more entries allowed as game over");
     });
   });
+
   describe('#sum', function() {
     it('shows the current total score and puts into an array', function() {
-      game.entry(4, 5);
-      game.entry(3, 6);
-      game.entry(4, 4);
-      expect(game.runningScore).toEqual([0, 9, 18, 26]);
+      for (var i = 0; i < 3; i++) {
+        game.entry(4, 5);
+      }
+      expect(game.currentScore).toEqual([0, 9, 18, 27]);
     });
   });
   describe('#_spare', function() {
-    it('spare does not put a current score', function() {
-      game.entry(5, 5);
-      console.log("RunScore " + game.runningScore);
+    it('calculates the points correctly', function() {
+      game.entry(4, 5);
+      console.log("CurScore  " + game.currentScore);
       console.log("FrameNo " + game.frameNumber);
       console.log("FrameTot " + game.frameTotal);
-      expect(game.runningScore).toEqual([""])
+      game.entry(5, 5);
+      game.spare = true;
+      console.log("CurScore  " + game.currentScore);
+      console.log("FrameNo " + game.frameNumber);
+      console.log("FrameTot " + game.frameTotal);
+      game.entry(4, 5);
+      console.log("CurScore  " + game.currentScore);
+      console.log("FrameNo " + game.frameNumber);
+      console.log("FrameTot " + game.frameTotal);
+      expect(game.currentScore).toEqual([0, 9, 23, 32])
     });
-    // it('adds the first entry to the previous frame total', function() {
-    //   game.entry(6, 3);
-    //   console.log("RunScore  " + game.runningScore);
-    //   console.log("FrameNo " + game.frameNumber);
-    //   console.log("FrameTot " + game.frameTotal);
-    //   expect(game.runningScore).toEqual([16, 25]);
-    // });
   });
-  // describe('#show', function() {
-  //   it('converts the spares and strikes into symbols', function() {
-  //     game.entry(4, 6);
-  //     game.entry(10);
-  //     expect(game.displayScore).toEqual([
-  //       [4, "/"],
-  //       ["X", ""]
-  //     ]);
-  //   });
-  // });
 });
-
-// console.log("RunScore" + game.runningScore);
-// console.log("FrameNo" + game.frameNumber);
-// console.log("FrameTot" + game.frameTotal);

@@ -1,15 +1,13 @@
 var Game = function() {
   this.bowlsPerFrame = [];
-  // this.displayScore = [];
-  this.runningScore = [0];
-  this.spare = false;
-  this.strike = false;
+  this.currentScore = [0];
   this.frameNumber = 0;
   this.frameTotal = 0;
+  this.spare = false;
+  this.strike = false;
 }
 
 Game.prototype.entry = function(first, second = 0) {
-  this.frameNumber++;
   this.frameTotal = first + second;
   if (arguments.length == 1 && first !== 10) {
     throw ("single entries can only be strikes");
@@ -23,44 +21,28 @@ Game.prototype.entry = function(first, second = 0) {
   if (first == 10) {
     second = 0;
   }
-  // this.show(first, second);
   this.sum(first, second);
   this.bowlsPerFrame.push([first, second]);
+  this.frameNumber++;
 }
 
 Game.prototype.sum = function(first, second) {
-  if (first == 10) {
-    this.strike = true;
-    this.runningScore.push("");
+  this.addSumToArr();
+  if (this.spare == true) {
+    this._spare(first)
   }
-  // this.frameTotal = first + second;
-  // if (this.frameTotal == 10) {
-  //   this.spare == true;
-  //   this.runningScore.push("");
-  // }
-  // if (this.spare == true) {
-  //   this.runningScore[this.frameNumber - 1] = first + 10 + this.runningScore;
-  // }
-  if (this.frameNumber == 1) {
-    this.runningScore[1] = this.frameTotal;
-  } else {
-    this.addSumToArr();
+  if (this.strike == true) {
+    this._strike()
   }
 }
 
 Game.prototype.addSumToArr = function() {
-  this.frameTotal = this.frameTotal + this.runningScore[this.frameNumber - 1];
-  this.runningScore.push(this.frameTotal);
+  this.frameTotal = this.frameTotal + this.currentScore[this.frameNumber];
+  this.currentScore.push(this.frameTotal);
 };
 
-
-
-// Game.prototype.show = function(first, second) {
-//   if (first + second == 10) {
-//     second = "/";
-//   }
-//   if (first == 10) {
-//     first = "X", second = "";
-//   }
-//   this.displayScore.push([first, second]);
-// };
+Game.prototype._spare = function(first) {
+  console.log(first);
+  this.currentScore[this.frameNumber] += first;
+  this.spare = false;
+};
