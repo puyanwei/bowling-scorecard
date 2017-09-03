@@ -7,16 +7,12 @@ describe('Game', function() {
 
   describe('#initialize', function() {
     it('starts with an empty array called score at a new game', function() {
-      expect(game.score).toEqual([]);
+      expect(game.bowlsPerFrame).toEqual([]);
     })
     it('has a frame number counter, which goes up by one each time you complete an entry', function() {
-      game.entry(4, 5);
-      expect(game.frameNumber).toEqual(1);
-      game.entry(3, 6);
-      expect(game.frameNumber).toEqual(2);
-      game.entry(4, 5);
-      expect(game.frameNumber).toEqual(3);
-      game.entry(3, 6);
+      for (var i = 0; i < 4; i++) {
+        game.entry(4, 5);
+      }
       expect(game.frameNumber).toEqual(4);
     });
   });
@@ -24,7 +20,7 @@ describe('Game', function() {
   describe('#entry', function() {
     it('enters a score into the first frame', function() {
       game.entry(4, 5);
-      expect(game.score).toEqual([
+      expect(game.bowlsPerFrame).toEqual([
         [4, 5]
       ]);
     });
@@ -32,7 +28,7 @@ describe('Game', function() {
     it('enters another score which goes into the 2nd frame', function() {
       game.entry(4, 5);
       game.entry(3, 6);
-      expect(game.score).toEqual([
+      expect(game.bowlsPerFrame).toEqual([
         [4, 5],
         [3, 6]
       ]);
@@ -44,8 +40,9 @@ describe('Game', function() {
     });
     it('single entrys are strikes', function() {
       game.entry(10);
-      expect(game.score).toEqual([
-        [10, ""]
+      console.log(game.bowlsPerFrame);
+      expect(game.bowlsPerFrame).toEqual([
+        [10, 0]
       ])
     });
     it('single entrys are only strikes', function() {
@@ -62,22 +59,29 @@ describe('Game', function() {
       }).toThrow("no more entries allowed as game over");
     });
   });
-  describe('#totalPerFrame', function() {
+  describe('#sum', function() {
     it('shows the current total score and puts into an array', function() {
       game.entry(4, 5);
-      console.log("FrameNo " + game.frameNumber);
-      console.log("RunScore " + game.runningScore);
-      console.log("FrameTot " + game.frameTotal);
       game.entry(3, 6);
-      console.log("FrameNo " + game.frameNumber);
-      console.log("RunScore " + game.runningScore);
-      console.log("FrameTot " + game.frameTotal);
       game.entry(4, 4);
-      console.log("FN " + game.frameNumber);
-      console.log("RS " + game.runningScore);
-      console.log("RT " + game.frameTotal);
       expect(game.runningScore).toEqual([0, 9, 18, 26]);
     });
+  });
+  describe('#_spare', function() {
+    it('spare does not put a current score', function() {
+      game.entry(5, 5);
+      console.log("RunScore " + game.runningScore);
+      console.log("FrameNo " + game.frameNumber);
+      console.log("FrameTot " + game.frameTotal);
+      expect(game.runningScore).toEqual([""])
+    });
+    // it('adds the first entry to the previous frame total', function() {
+    //   game.entry(6, 3);
+    //   console.log("RunScore  " + game.runningScore);
+    //   console.log("FrameNo " + game.frameNumber);
+    //   console.log("FrameTot " + game.frameTotal);
+    //   expect(game.runningScore).toEqual([16, 25]);
+    // });
   });
   // describe('#show', function() {
   //   it('converts the spares and strikes into symbols', function() {
@@ -90,3 +94,7 @@ describe('Game', function() {
   //   });
   // });
 });
+
+// console.log("RunScore" + game.runningScore);
+// console.log("FrameNo" + game.frameNumber);
+// console.log("FrameTot" + game.frameTotal);
