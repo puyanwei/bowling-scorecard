@@ -40,7 +40,6 @@ describe('Game', function() {
     });
     it('single entrys are strikes', function() {
       game.entry(10);
-      console.log(game.bowlsPerFrame);
       expect(game.bowlsPerFrame).toEqual([
         [10, 0]
       ])
@@ -87,11 +86,11 @@ describe('Game', function() {
       game.entry(4, 5);
       game.entry(10);
       game.entry(4, 5);
-
       expect(game.currentScore).toEqual([0, 9, 28, 37])
     });
   });
 });
+// need more tests with varied strikes and spares
 
 // console.log("CurScore  " + game.currentScore);
 // console.log("FrameNo " + game.frameNumber);
