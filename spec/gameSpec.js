@@ -69,7 +69,7 @@ describe('Game', function() {
     });
   });
   describe('#_spare', function() {
-    it('calculates the points correctly', function() {
+    fit('calculates the points correctly', function() {
       game.entry(4, 5);
       console.log("CurScore  " + game.currentScore);
       console.log("FrameNo " + game.frameNumber);

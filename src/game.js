@@ -28,6 +28,7 @@ Game.prototype.entry = function(first, second = 0) {
 
 Game.prototype.sum = function(first, second) {
   this.addSumToArr();
+  console.log(this.spare);
   if (this.spare == true) {
     this._spare(first)
   }
@@ -44,5 +45,6 @@ Game.prototype.addSumToArr = function() {
 Game.prototype._spare = function(first) {
   console.log(first);
   this.currentScore[this.frameNumber] += first;
+  this.currentScore[this.frameNumber + 1] += first;
   this.spare = false;
 };
