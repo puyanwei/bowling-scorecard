@@ -8,8 +8,11 @@ var Game = function() {
   this.strike = false;
 }
 
-Game.prototype.entry = function(first, second = 0) {
+Game.prototype.entry = function(first, second = 0, third = 0) {
   this.framesTotal = first + second;
+  if (arguments.length == 3 && this.bowlsPerFrame !== 10) {
+    throw ("only the tenth frame can take 3 arguments");
+  }
   if (arguments.length == 1 && first !== 10) {
     throw ("single entries can only be strikes");
   }
