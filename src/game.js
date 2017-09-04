@@ -2,13 +2,14 @@ var Game = function() {
   this.bowlsPerFrame = [];
   this.currentScore = [0];
   this.frameNumber = 0;
-  this.frameTotal = 0;
+  this.framesTotal = 0;
+  this.totalSum = 0;
   this.spare = false;
   this.strike = false;
 }
 
 Game.prototype.entry = function(first, second = 0) {
-  this.frameTotal = first + second;
+  this.framesTotal = first + second;
   if (arguments.length == 1 && first !== 10) {
     throw ("single entries can only be strikes");
   }
@@ -28,23 +29,33 @@ Game.prototype.entry = function(first, second = 0) {
 
 Game.prototype.sum = function(first, second) {
   this.addSumToArr();
-  console.log(this.spare);
   if (this.spare == true) {
     this._spare(first)
+    this.spare = false;
   }
   if (this.strike == true) {
-    this._strike()
+    this._strike(first, second)
+    this.strike = false;
+  }
+  if (first !== 10 && first + second == 10) {
+    this.spare = true;
+  }
+  if (first == 10) {
+    this.strike = true;
   }
 }
 
 Game.prototype.addSumToArr = function() {
-  this.frameTotal = this.frameTotal + this.currentScore[this.frameNumber];
-  this.currentScore.push(this.frameTotal);
+  this.framesTotal = this.framesTotal + this.currentScore[this.frameNumber];
+  this.currentScore.push(this.framesTotal);
 };
 
 Game.prototype._spare = function(first) {
-  console.log(first);
   this.currentScore[this.frameNumber] += first;
   this.currentScore[this.frameNumber + 1] += first;
-  this.spare = false;
+};
+
+Game.prototype._strike = function(first, second) {
+  this.currentScore[this.frameNumber] += first + second;
+  this.currentScore[this.frameNumber + 1] += first + second;
 };

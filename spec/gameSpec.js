@@ -69,21 +69,35 @@ describe('Game', function() {
     });
   });
   describe('#_spare', function() {
-    fit('calculates the points correctly', function() {
+    it('calculates the points correctly for a spare', function() {
       game.entry(4, 5);
-      console.log("CurScore  " + game.currentScore);
-      console.log("FrameNo " + game.frameNumber);
-      console.log("FrameTot " + game.frameTotal);
       game.entry(5, 5);
-      game.spare = true;
-      console.log("CurScore  " + game.currentScore);
-      console.log("FrameNo " + game.frameNumber);
-      console.log("FrameTot " + game.frameTotal);
+      game.entry(4, 5);
+      expect(game.currentScore).toEqual([0, 9, 23, 32])
+    });
+  });
+
+  describe('#_strike', function() {
+    it('calculates the points correctly for a strike', function() {
       game.entry(4, 5);
       console.log("CurScore  " + game.currentScore);
       console.log("FrameNo " + game.frameNumber);
-      console.log("FrameTot " + game.frameTotal);
-      expect(game.currentScore).toEqual([0, 9, 23, 32])
+      console.log("FrameTot " + game.framesTotal);
+      console.log("Strike? " + game.strike);
+      console.log("Spare? " + game.spare);
+      game.entry(10);
+      console.log("CurScore  " + game.currentScore);
+      console.log("FrameNo " + game.frameNumber);
+      console.log("FrameTot " + game.framesTotal);
+      console.log("Strike? " + game.strike);
+      console.log("Spare? " + game.spare);
+      game.entry(4, 5);
+      console.log("CurScore  " + game.currentScore);
+      console.log("FrameNo " + game.frameNumber);
+      console.log("FrameTot " + game.framesTotal);
+      console.log("Strike? " + game.strike);
+      console.log("Spare? " + game.spare);
+      expect(game.currentScore).toEqual([0, 9, 28, 37])
     });
   });
 });
