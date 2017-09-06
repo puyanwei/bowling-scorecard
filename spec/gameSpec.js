@@ -1,99 +1,49 @@
 describe('Game', function() {
   var game;
+  var frame;
 
   beforeEach(function() {
     game = new Game();
+    frame = new Frame();
   })
-
   describe('#initialize', function() {
-    it('starts with an empty array called score at a new game', function() {
-      expect(game.bowlsPerFrame).toEqual([]);
-    })
-    it('has a frame number counter, which goes up by one each time you complete an entry', function() {
-      for (var i = 0; i < 4; i++) {
-        game.entry(4, 5);
-      }
-      expect(game.frameNumber).toEqual(4);
+    it('starts with an empty match array', function() {
+      expect(game.match).toEqual([]);
+    });
+    it('shows the number of frames played', function() {
+      game.entry(4, 5);
+      game.entry(4, 5);
+      expect(game.framesPlayed).toEqual(2);
+    });
+    it('running score starts at zero', function() {
+      expect(game.runningScore).toEqual(0);
+    });
+    it('shows the running total score', function() {
+      game.entry(3, 5);
+      game.entry(3, 5);
+      expect(game.runningScore).toEqual(16)
     });
   });
 
   describe('#entry', function() {
-    it('enters a score into the first frame', function() {
+    it('adds a frame to the match array', function() {
       game.entry(4, 5);
-      expect(game.bowlsPerFrame).toEqual([
-        [4, 5]
-      ]);
-    });
-
-    it('enters another score which goes into the 2nd frame', function() {
       game.entry(4, 5);
-      game.entry(3, 6);
-      expect(game.bowlsPerFrame).toEqual([
-        [4, 5],
-        [3, 6]
-      ]);
+      expect(game.framesPlayed).toEqual(2);
     });
-    it('throws an error if scores add up to over ten', function() {
-      expect(function() {
-        game.entry(9, 5);
-      }).toThrow("scores cannot be a sum of over 10");
-    });
-    it('single entrys are strikes', function() {
-      game.entry(10);
-      expect(game.bowlsPerFrame).toEqual([
-        [10, 0]
-      ])
-    });
-    it('single entrys are only strikes', function() {
-      expect(function() {
-        game.entry(9)
-      }).toThrow("single entries can only be strikes");
-    });
-    it('the game is over after 10 frames', function() {
-      for (var i = 0; i < 10; i++) {
-        game.entry(4, 5);
-      }
-      expect(function() {
-        game.entry(4, 5)
-      }).toThrow("no more entries allowed as game over");
-    });
-    it('only the tenth frame can take three arguments', function() {
-      expect(function() {
-        game.entry(4, 5, 9)
-      }).toThrow("only the tenth frame can take 3 arguments");
-    });
-  });
-
-  describe('#sum', function() {
-    it('shows the current total score and puts into an array', function() {
-      for (var i = 0; i < 3; i++) {
-        game.entry(4, 5);
-      }
-      expect(game.currentScore).toEqual([0, 9, 18, 27]);
-    });
-  });
-  describe('#_spare', function() {
-    it('calculates the points correctly for a spare', function() {
-      game.entry(4, 5);
-      game.entry(5, 5);
-      game.entry(4, 5);
-      expect(game.currentScore).toEqual([0, 9, 23, 32])
-    });
-  });
-
-  describe('#_strike', function() {
-    it('calculates the points correctly for a strike', function() {
+    it('inputs a strike to the frame', function() {
       game.entry(4, 5);
       game.entry(10);
-      game.entry(4, 5);
-      expect(game.currentScore).toEqual([0, 9, 28, 37])
+      expect(game.match[1].strike).toBe(true);
+    });
+    it('inputs a spare to the frame', function () {
+      game.entry(5, 5)
+      expect(game.match[0].spare).toBe(true);
+    });
+    it('throws an error if sum of entries are more then 10', function() {
+      expect(function() {
+        game.entry(5, 6)
+      }).toThrow("Entries cannot be a sum of over 10")
     });
   });
 });
-// need more tests with varied strikes and spares
-
-// console.log("CurScore  " + game.currentScore);
-// console.log("FrameNo " + game.frameNumber);
-// console.log("FrameTot " + game.framesTotal);
-// console.log("Strike? " + game.strike);
-// console.log("Spare? " + game.spare);
