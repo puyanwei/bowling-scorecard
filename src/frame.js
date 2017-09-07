@@ -3,8 +3,25 @@ var Frame = function(first, second) {
   this.frameTotal = first + second;
   this.spare = false;
   this.strike = false;
+  this.isStrike()
+  this.isSpare()
 }
 
+Frame.prototype.isStrike = function() {
+  if (this.bowlsPerFrame[0] == 10) {
+  this.strike = true;
+  }
+};
+
+Frame.prototype.isSpare = function() {
+  if (this.frameTotal == 10) {
+  this.spare = true;
+  }
+};
+//
+// Game.prototype.isSpare = function() {
+// this.match[this.framesPlayed].spare = true;
+// };
 // Frame.prototype.entry = function(first, second = 0, third = 0) {
 //   this.framesTotal = first + second;
 //   if (arguments.length == 3 && this.bowlsPerFrame !== 10) {

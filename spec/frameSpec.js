@@ -11,6 +11,18 @@ describe('Frame', function() {
       expect(frame.frameTotal).toEqual(7)
     });
   });
+  describe('#isStrike', function() {
+    it('inputs a strike to the frame', function() {
+      frame = new Frame(10, 0)
+      expect(frame.strike).toBe(true);
+    });
+  });
+  describe('#isSpare', function() {
+    it('inputs a spare to the frame', function() {
+      frame = new Frame(4, 6)
+      expect(frame.spare).toBe(true);
+    });
+  });
 });
 // describe('#entry', function() {
 //   it('enters a score into the first frame', function() {

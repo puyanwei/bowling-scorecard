@@ -36,14 +36,30 @@ describe('Game', function() {
       game.entry(10);
       expect(game.match[1].strike).toBe(true);
     });
-    it('inputs a spare to the frame', function () {
-      game.entry(5, 5)
-      expect(game.match[0].spare).toBe(true);
-    });
     it('throws an error if sum of entries are more then 10', function() {
       expect(function() {
         game.entry(5, 6)
       }).toThrow("Entries cannot be a sum of over 10")
     });
   });
+
+  describe('#prevCalcs', function() {
+    it('shows the previous first bowl points', function() {
+      game.entry(4, 6)
+      game.entry(5, 2)
+      expect(game.prevFirstBowl).toEqual(4)
+    });
+    it('shows the previous two bowls points', function() {
+      game.entry(4, 6)
+      game.entry(5, 2)
+      expect(game.prevTwoBowls).toEqual(10)
+    });
+  });
+  // describe('#tally', function () {
+  //   it('outputs the correct score after a spare', function () {
+  //     game.entry(4, 6)
+  //     game.entry(3, 6)
+  //     expect(game.runningScore).toEqual(22)
+  //   });
+  // });
 });
