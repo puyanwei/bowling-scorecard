@@ -42,8 +42,20 @@ describe('Game', function() {
 
   describe('#displayScore', function() {
     it('displays the correct score', function() {
-      player.entry(3, 4)
-      expect(player.displayScore()).toEqual([3, 4, 7])
+      player.entry(3, 6)
+      player.entry(2, 6)
+      expect(player.displayScore()).toEqual([
+        [3, 6, 9],
+        [2, 6, 17]
+      ])
     });
   });
+
+  // describe('#isSpare', function () {
+  //   it('adds the first bowl from this frame to the previous', function () {
+  //     player.entry(4, 6)
+  //     player.entry(4, 3)
+  //     expect(player.runningScore).toEqual(21)
+  //   });
+  // });
 });
