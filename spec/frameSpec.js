@@ -1,44 +1,58 @@
 fdescribe('Frame', function() {
   var frame;
 
-  // describe('#initialize', function() {
-  //   it('shows the bowls per frame', function() {
-  //     frame = new Frame(4, 3);
-  //     expect(frame.bowlsPerFrame).toEqual([4, 3])
-  //   });
-  //   it('shows score for this frame', function() {
-  //     frame = new Frame(4, 3);
-  //     expect(frame.frameTotal).toEqual(7)
-  //   });
-  // });
+  beforeEach(function() {
+    frame = new Frame()
+  })
+
   describe('#firstBowl', function() {
-    it('adds the score of the first bowl', function() {
-      frame = new Frame();
+    it('saves the score of the first bowl', function() {
       frame.firstBowl(3);
       expect(frame.first).toEqual(3)
     });
     it('tags a strike if first bowl is 10', function() {
-      frame = new Frame();
       frame.firstBowl(10);
       expect(frame.strike).toBe(true);
     })
     it('throws and error if entry is more then 10', function() {
-      frame = new Frame();
       expect(function() {
         frame.firstBowl(11)
       }).toThrow("entry cannot be bigger then 10")
     })
   });
-});
-  // describe('#isStrike', function() {
-  //   it('inputs a strike to the frame', function() {
-  //     frame = new Frame(10, 0)
-  //     expect(frame.strike).toBe(true);
-  //   });
-  // });
-  // describe('#isSpare', function() {
-  //   it('inputs a spare to the frame', function() {
-  //     frame = new Frame(4, 6)
-  //     expect(frame.spare).toBe(true);
-  //   });
-  // });
+
+  describe('#secondBowl', function() {
+    it('saves the score of the second bowl', function() {
+      frame.firstBowl(1);
+      frame.secondBowl(3);
+      expect(frame.second).toEqual(3)
+    });
+    it('tags a spare if second bowl is 10', function() {
+      frame.firstBowl(0);
+      frame.secondBowl(10);
+      expect(frame.spare).toBe(true);
+    })
+    it('tags a spare if the sum of the first and second bowl is 10', function() {
+      frame.firstBowl(4);
+      frame.secondBowl(6);
+      expect(frame.spare).toBe(true);
+    })
+    it('throws and error if entry is more then 10', function() {
+      expect(function() {
+        frame.firstBowl(1)
+        frame.secondBowl(11)
+      }).toThrow("entry cannot be bigger then 10")
+    })
+    it('throws and error if the sum of the first and second bowl is more then 10', function() {
+      expect(function() {
+        frame.firstBowl(6)
+        frame.secondBowl(5)
+      }).toThrow("entries cannot be a sum of more then 10")
+    })
+    it('throws an error if an entry to second bowl was attempted first', function() {
+      expect(function() {
+        frame.secondBowl(5)
+      }).toThrow("cannot enter the second bowl first")
+    });
+  })
+})
