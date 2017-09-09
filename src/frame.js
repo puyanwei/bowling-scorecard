@@ -5,6 +5,7 @@ var Frame = function(first, second) {
   this.second;
   this.firstBowl(first)
   this.secondBowl(second)
+  this.frameTotal = this.first + this.second
 }
 
 Frame.prototype.firstBowl = function(first) {
