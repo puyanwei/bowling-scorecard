@@ -1,13 +1,13 @@
-fdescribe('Frame', function() {
+describe('Frame', function() {
   var frame;
-
-  beforeEach(function() {
-    frame = new Frame()
-  })
+  //
+  // beforeEach(function() {
+  //   frame = new Frame()
+  // })
 
   describe('#firstBowl', function() {
     it('saves the score of the first bowl', function() {
-      frame.firstBowl(3);
+      frame = new Frame(3, 4)
       expect(frame.first).toEqual(3)
     });
     it('tags a strike if first bowl is 10', function() {
@@ -33,8 +33,8 @@ fdescribe('Frame', function() {
       expect(frame.spare).toBe(true);
     })
     it('tags a spare if the sum of the first and second bowl is 10', function() {
-      frame.firstBowl(4);
-      frame.secondBowl(6);
+      frame.firstBowl(3);
+      frame.secondBowl(7);
       expect(frame.spare).toBe(true);
     })
     it('throws and error if entry is more then 10', function() {
@@ -49,10 +49,5 @@ fdescribe('Frame', function() {
         frame.secondBowl(5)
       }).toThrow("entries cannot be a sum of more then 10")
     })
-    it('throws an error if an entry to second bowl was attempted first', function() {
-      expect(function() {
-        frame.secondBowl(5)
-      }).toThrow("cannot enter the second bowl first")
-    });
   })
 })
