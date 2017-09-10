@@ -19,10 +19,23 @@ describe('Game', function() {
     });
   });
 
+  describe('#frameDeclare', function() {
+    it('current frame is declared', function() {
+      player.entry(3, 6)
+      expect(player.currentFrame).toEqual(jasmine.any(Object))
+    });
+    it('current frame is declared', function() {
+      player.entry(3, 6)
+      player.entry(3, 6)
+      player.entry(3, 6)
+      expect(player.prevFrame).toEqual(jasmine.any(Object))
+    });
+  });
+
   describe('#entry', function() {
     it('entry creates a new frame and adds it to the game', function() {
       player.entry(3, 4);
-      expect(player.allScores.length).toEqual(1);
+      expect(player.allScores).toContain(jasmine.any(Object))
     });
   });
 
@@ -51,10 +64,13 @@ describe('Game', function() {
     });
   });
 
-  // describe('#isSpare', function () {
-  //   it('adds the first bowl from this frame to the previous', function () {
+  // describe('#isSpare', function() {
+  //   it('adds the first bowl from this frame to the previous', function() {
   //     player.entry(4, 6)
   //     player.entry(4, 3)
+  //     console.log(player.displayAllScores[player.framesPlayed - 2][2]);
+  //     console.log(player.currentFrame.first);
+  //     console.log(player.displayAllScores);
   //     expect(player.runningScore).toEqual(21)
   //   });
   // });
