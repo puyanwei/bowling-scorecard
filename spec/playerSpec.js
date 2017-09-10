@@ -15,7 +15,7 @@ describe('Game', function() {
     });
     it('frames get counted after an entry has been made', function() {
       player.entry(3, 6);
-      expect(player.framesPlayed).toEqual(1);
+      expect(player.frameCount).toEqual(1);
     });
   });
 
@@ -87,13 +87,29 @@ describe('Game', function() {
     });
   });
 
-  describe('#TenthFrame', function() {
-    it('creates a tenth frame which accepts three bowls', function() {
+  describe('#tenthFrame', function() {
+    it('creates a tenth frame which accepts three bowls if first two bowls are a spare or strike', function() {
       for (var i = 0; i < 9; i++) {
         player.entry(2, 2)
       }
-      player.tenthFrame(2, 4, 9)
+      player.tenthFrame(2, 8, 9);
       expect(player.allScores.length).toEqual(10)
+    });
+  });
+
+  describe('#extensive score testing', function() {
+    it('outputs the correct score', function() {
+      for (var i = 0; i < 8; i++) {
+        player.entry(4, 5)
+        // console.log(player.runningScore);
+      }
+      player.entry(10, 0)
+      console.log(player.frameCount);
+      console.log(player.runningScore);
+      player.tenthFrame(5, 5, 9);
+      console.log(player.displayAllScores);
+      console.log(player.runningScore);
+      expect(player.runningScore).toEqual(111)
     });
   });
 });
