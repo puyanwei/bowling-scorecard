@@ -28,7 +28,7 @@ Frame.prototype.secondBowl = function(second) {
   if (second == 10) {
     this.spare = true;
   }
-  if (this.first + second == 10) {
+  if (this.first !== 10 && this.first + second == 10) {
     this.spare = true;
   }
   this.second = second;

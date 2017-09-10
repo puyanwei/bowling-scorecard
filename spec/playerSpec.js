@@ -64,14 +64,23 @@ describe('Game', function() {
     });
   });
 
-  // describe('#isSpare', function() {
-  //   it('adds the first bowl from this frame to the previous', function() {
-  //     player.entry(4, 6)
-  //     player.entry(4, 3)
-  //     console.log(player.displayAllScores[player.framesPlayed - 2][2]);
-  //     console.log(player.currentFrame.first);
-  //     console.log(player.displayAllScores);
-  //     expect(player.runningScore).toEqual(21)
-  //   });
-  // });
+  describe('#isSpare', function() {
+    it('adds the first bowl from this frame to the previous and current frame', function() {
+      player.entry(4, 6)
+      player.entry(4, 3)
+      expect(player.runningScore).toEqual(21)
+    });
+  });
+
+  describe('#isStrike', function() {
+    it('adds two bowls from this frame to the previous and current frame', function() {
+      player.entry(10, 0)
+      player.entry(4, 3)
+      player.entry(10, 0)
+      player.entry(3, 4)
+      player.entry(5, 5)
+      player.entry(3, 4)
+      expect(player.runningScore).toEqual(68)
+    });
+  });
 });

@@ -16,9 +16,9 @@ Player.prototype.entry = function(first, second) {
   this.frameDeclare();
   this.runningScore += this.currentFrame.frameTotal;
   this.displayAllScores.push([this.currentFrame.first, this.currentFrame.second, this.runningScore]);
-  // this.isStrike();
   this.prevCalcs();
-  // this.isSpare();
+  this.isSpare();
+  this.isStrike();
 };
 
 Player.prototype.frameDeclare = function(arguments) {
@@ -35,13 +35,25 @@ Player.prototype.prevCalcs = function() {
   }
 };
 
-// Player.prototype.isSpare = function(arguments) {
-//   if (this.framesPlayed > 1) {
-//     if (this.prevFrame.spare) {
-//       this.displayAllScores[this.framesPlayed - 2][2] += this.currentFrame.first
-//     }
-//   }
-// };
+Player.prototype.isSpare = function() {
+  if (this.framesPlayed > 1) {
+    if (this.prevFrame.spare) {
+      this.displayAllScores[this.framesPlayed - 2][2] += this.currentFrame.first
+      this.displayAllScores[this.framesPlayed - 1][2] += this.currentFrame.first
+      this.runningScore = this.displayAllScores[this.framesPlayed - 1][2]
+    }
+  }
+};
+
+Player.prototype.isStrike = function() {
+  if (this.framesPlayed > 1) {
+    if (this.prevFrame.strike) {
+      this.displayAllScores[this.framesPlayed - 2][2] += this.currentFrame.frameTotal
+      this.displayAllScores[this.framesPlayed - 1][2] += this.currentFrame.frameTotal
+      this.runningScore = this.displayAllScores[this.framesPlayed - 1][2]
+    }
+  }
+};
 
 Player.prototype.displayScore = function() {
   return this.displayAllScores;
