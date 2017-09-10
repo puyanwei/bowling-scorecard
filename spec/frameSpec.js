@@ -1,21 +1,21 @@
 describe('Frame', function() {
   var frame;
-  //
-  // beforeEach(function() {
-  //   frame = new Frame()
-  // })
 
-  describe('#firstBowl', function() {
-    it('saves the score of the first bowl', function() {
+  describe('#initialize', function () {
+    it('saves the score of the first and second bowl', function() {
       frame = new Frame(3, 4)
       expect(frame.first).toEqual(3)
+      expect(frame.second).toEqual(4)
     });
+  });
+
+  describe('#firstBowl', function() {
     it('tags a strike if first bowl is 10', function() {
       frame = new Frame(10, 0)
       frame.firstBowl(10);
       expect(frame.strike).toBe(true);
     })
-    it('throws and error if entry is more then 10', function() {
+    it('throws an error if entry is more then 10', function() {
       expect(function() {
         frame = new Frame(11, 0)
         frame.firstBowl(11)
@@ -24,10 +24,6 @@ describe('Frame', function() {
   });
 
   describe('#secondBowl', function() {
-    it('saves the score of the second bowl', function() {
-      frame = new Frame(1, 3)
-      expect(frame.second).toEqual(3)
-    });
     it('tags a spare if second bowl is 10', function() {
       frame.firstBowl(0);
       frame.secondBowl(10);
@@ -37,7 +33,7 @@ describe('Frame', function() {
       frame = new Frame(0, 10)
       expect(frame.spare).toBe(true);
     })
-    it('throws and error if entry is more then 10', function() {
+    it('throws an error if entry is more then 10', function() {
       expect(function() {
         frame = new Frame(1, 11)
       }).toThrow("entry cannot be bigger then 10")

@@ -19,23 +19,26 @@ describe('Game', function() {
     });
   });
 
-  describe('#frameDeclare', function() {
-    it('current frame is declared', function() {
-      player.entry(3, 6)
-      expect(player.currentFrame).toEqual(jasmine.any(Object))
+  describe('#entry', function() {
+    it('entry creates a new frame and adds it to the game', function() {
+      player.entry(3, 4);
+      expect(player.allScores).toContain(jasmine.any(Object))
     });
+    it('throws and error if there are more then 9 entries this game', function() {
+      expect(function() {
+        for (var i = 0; i < 10; i++) {
+          player.entry(2, 2)
+        }
+      }).toThrow("no more two bowl entries left in game")
+    })
+  });
+
+  describe('#frameDeclare', function() {
     it('current frame is declared', function() {
       player.entry(3, 6)
       player.entry(3, 6)
       player.entry(3, 6)
       expect(player.prevFrame).toEqual(jasmine.any(Object))
-    });
-  });
-
-  describe('#entry', function() {
-    it('entry creates a new frame and adds it to the game', function() {
-      player.entry(3, 4);
-      expect(player.allScores).toContain(jasmine.any(Object))
     });
   });
 
@@ -81,6 +84,16 @@ describe('Game', function() {
       player.entry(5, 5)
       player.entry(3, 4)
       expect(player.runningScore).toEqual(68)
+    });
+  });
+
+  describe('#TenthFrame', function() {
+    it('creates a tenth frame which accepts three bowls', function() {
+      for (var i = 0; i < 9; i++) {
+        player.entry(2, 2)
+      }
+      player.tenthFrame(2, 4, 9)
+      expect(player.allScores.length).toEqual(10)
     });
   });
 });

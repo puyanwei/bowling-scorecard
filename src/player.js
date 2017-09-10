@@ -10,7 +10,13 @@ var Player = function() {
 }
 
 Player.prototype.entry = function(first, second) {
+  if (this.framesPlayed > 8) {
+    throw ("no more two bowl entries left in game")
+  }
   frame = new Frame(first, second);
+  this.run()
+}
+Player.prototype.run = function () {
   this.allScores.push(frame);
   this.framesPlayed++;
   this.frameDeclare();
@@ -53,6 +59,11 @@ Player.prototype.isStrike = function() {
       this.runningScore = this.displayAllScores[this.framesPlayed - 1][2]
     }
   }
+};
+
+Player.prototype.tenthFrame = function(first, second, third) {
+  frameTen = new FrameTen(first, second, third);
+  this.run()
 };
 
 Player.prototype.displayScore = function() {

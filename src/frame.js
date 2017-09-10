@@ -9,11 +9,11 @@ var Frame = function(first, second) {
 }
 
 Frame.prototype.firstBowl = function(first) {
-  if (first == 10) {
-    this.strike = true;
-  }
   if (first > 10) {
     throw ("entry cannot be bigger then 10")
+  }
+  if (first == 10) {
+    this.strike = true;
   }
   this.first = first;
 };
