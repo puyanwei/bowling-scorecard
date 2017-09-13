@@ -1,115 +1,41 @@
-describe('Game', function() {
+describe("Game", function() {
   var player;
   var frame;
 
   beforeEach(function() {
     player = new Player();
-  })
-
-  describe('#initialize', function() {
-    it('running score starts at zero', function() {
-      expect(player.runningScore).toEqual(0);
-    });
-    it('all scores starts as an empty array', function() {
-      expect(player.allScores).toEqual([])
-    });
-    it('frames get counted after an entry has been made', function() {
-      player.entry(3, 6);
-      expect(player.frameCount).toEqual(1);
-    });
+    frame = new Frame();
   });
 
-  describe('#entry', function() {
-    it('entry creates a new frame and adds it to the game', function() {
+  describe("#entry", function() {
+    it("entry creates a new frame and adds it to the game", function() {
       player.entry(3, 4);
-      expect(player.allScores).toContain(jasmine.any(Object))
+      console.log(player.allScores);
+      expect(player.allScores).toContain(jasmine.any(Object));
+      // expect(player.allScores).toEqual(jasmine.objectContaining([Object { strike: false, spare: false, first: 3, second: 4, frameTotal: 7 }]))
     });
-    it('throws and error if there are more then 9 entries this game', function() {
+  });
+
+  describe("#errorCheck", function() {
+    it("throws an error if either entry is higher then 10", function() {
       expect(function() {
-        for (var i = 0; i < 10; i++) {
-          player.entry(2, 2)
-        }
-      }).toThrow("no more two bowl entries left in game")
-    })
-  });
-
-  describe('#frameDeclare', function() {
-    it('current frame is declared', function() {
-      player.entry(3, 6)
-      player.entry(3, 6)
-      player.entry(3, 6)
-      expect(player.prevFrame).toEqual(jasmine.any(Object))
+        player.errorCheck(11, 2);
+      }).toThrow("entry cannot be higher then 10");
+      expect(function() {
+        player.errorCheck(5, 12);
+      }).toThrow("entry cannot be higher then 10");
+    });
+    it("throws an error if the sum of entries is higher then 10", function() {
+      expect(function() {
+        player.errorCheck(6, 6);
+      }).toThrow("the sum of entries cannot be higher then 10");
     });
   });
 
-  describe('#prevCalcs', function() {
-    it('shows the previous first bowl points', function() {
-      player.entry(4, 6)
-      player.entry(5, 2)
-      expect(player.prevFirstBowl).toEqual(4);
-
-    });
-    it('shows the previous two bowls points', function() {
-      player.entry(4, 3)
-      player.entry(5, 2)
-      expect(player.prevTwoBowls).toEqual(7)
-    });
-  });
-
-  describe('#displayScore', function() {
-    it('displays the correct score', function() {
-      player.entry(3, 6)
-      player.entry(2, 6)
-      expect(player.displayScore()).toEqual([
-        [3, 6, 9],
-        [2, 6, 17]
-      ])
-    });
-  });
-
-  describe('#isSpare', function() {
-    it('adds the first bowl from this frame to the previous and current frame', function() {
-      player.entry(4, 6)
-      player.entry(4, 3)
-      expect(player.runningScore).toEqual(21)
-    });
-  });
-
-  describe('#isStrike', function() {
-    it('adds two bowls from this frame to the previous and current frame', function() {
-      player.entry(10, 0)
-      player.entry(4, 3)
-      player.entry(10, 0)
-      player.entry(3, 4)
-      player.entry(5, 5)
-      player.entry(3, 4)
-      expect(player.runningScore).toEqual(68)
-    });
-  });
-
-  describe('#tenthFrame', function() {
-    it('creates a tenth frame which accepts three bowls if first two bowls are a spare or strike', function() {
-      for (var i = 0; i < 9; i++) {
-        player.entry(2, 2)
-      }
-      player.tenthFrame(2, 8, 9);
-      expect(player.allScores.length).toEqual(10)
-    });
-  });
-
-  describe('#extensive score testing', function() {
-    it('outputs the correct score', function() {
-      for (var i = 0; i < 8; i++) {
-        player.entry(4, 5)
-        // console.log(player.runningScore);
-      }
-      player.entry(10, 0)
-      console.log(player.frameCount);
-      console.log(player.runningScore);
-      player.tenthFrame(5, 5, 9);
-      console.log(player.displayAllScores);
-      console.log(player.runningScore);
-      expect(player.runningScore).toEqual(111)
+  describe('#outputsScore', function () {
+    it('outputs the correct score', function () {
+      player.entry(3, 5)
+      expect(player.output).toEqual([3, 5, 8])
     });
   });
 });
