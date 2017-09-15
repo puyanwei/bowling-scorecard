@@ -5,6 +5,15 @@ var Frame = function(first, second) {
   this.second = second;
   this.totalFrame = this.first + this.second
 }
+
+Frame.prototype.errorCheck = function(first, second) {
+  if (first > 10 || second > 10) {
+    throw "entry cannot be higher then 10";
+  }
+  if (first + second > 10) {
+    throw "the sum of entries cannot be higher then 10";
+  }
+};
 // Frame.prototype.firstBowl = function(first) {
 //   if (first > 10) {
 //     throw ("entry cannot be bigger then 10")
