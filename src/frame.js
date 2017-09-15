@@ -3,9 +3,8 @@ var Frame = function(first, second) {
   this.spare = false;
   this.first = first;
   this.second = second;
-  this.frameTotal = this.first + this.second
+  this.totalFrame = this.first + this.second
 }
-
 // Frame.prototype.firstBowl = function(first) {
 //   if (first > 10) {
 //     throw ("entry cannot be bigger then 10")

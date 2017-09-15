@@ -4,15 +4,14 @@ describe("Game", function() {
 
   beforeEach(function() {
     player = new Player();
-    frame = new Frame();
+    // frame = new Frame();
   });
 
   describe("#entry", function() {
     it("entry creates a new frame and adds it to the game", function() {
       player.entry(3, 4);
-      console.log(player.allScores);
-      expect(player.allScores).toContain(jasmine.any(Object));
-      // expect(player.allScores).toEqual(jasmine.objectContaining([Object { strike: false, spare: false, first: 3, second: 4, frameTotal: 7 }]))
+      expect(player.framesArray[0].first).toEqual(3);
+      expect(player.framesArray[0].second).toEqual(4);
     });
   });
 
@@ -32,10 +31,26 @@ describe("Game", function() {
     });
   });
 
-  describe('#outputsScore', function () {
-    it('outputs the correct score', function () {
-      player.entry(3, 5)
-      expect(player.output).toEqual([3, 5, 8])
+  describe("#setFrameVariables", function() {
+    it("sets the variable for a frame", function() {
+      player.entry(3, 4);
+      expect(player.currentFrame).toEqual(
+        player.framesArray[player.framesArray.length - 1])
+    });
+    it("sets the variable for the prev frame if one exists", function() {
+      player.entry(3, 4);
+      player.entry(5, 4);
+      player.entry(3, 6);
+      expect(player.prevFrame).toEqual(
+        player.framesArray[player.framesArray.length - 2])
     });
   });
 });
+// describe("#outputScore", function() {
+//   it("outputs the correct score", function() {
+//     player.entry(3, 5);
+//     expect(function() {
+//       player.outputScore();
+//     }).toReturn([3, 5, 8]);
+//   });
+// });
