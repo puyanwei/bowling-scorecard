@@ -32,7 +32,7 @@ describe("Game", function() {
     });
   });
 
-  describe("#outputScore", function() {
+  fdescribe("#outputScore", function() {
     it("outputs the correct score", function() {
       player.entry(3, 5);
       expect(player.outputScore()).toEqual([3, 5, 8]);
