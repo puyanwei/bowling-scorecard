@@ -32,18 +32,19 @@ describe("Game", function() {
     });
   });
 
-  // describe("#calculateBonus", function() {
-  //   it("adds the extra points to the total score if the previous bowl has a spare", function() {
-  //     player.entry(5, 5);
-  //     player.entry(4, 3);
-  //   });
-  // });
+  describe("#calculateBonus", function() {
+    it("adds the extra points to the total score if the previous bowl has a spare", function() {
+      player.entry(5, 5);
+      player.entry(4, 3);
+      expect(player.outputScore()).toEqual([5, 5, 14][(4, 3, 21)]);
+    });
+  });
 
   describe("#outputScore", function() {
     it("outputs all bowls and the running score", function() {
       player.entry(3, 5);
       player.entry(4, 5);
-      expect(player.outputScore()).toEqual([3, 5, 8][(4, 5, 17)]);
+      expect(player.outputScore()).toEqual([[3, 5, 8], [4, 5, 17]]);
     });
   });
 });

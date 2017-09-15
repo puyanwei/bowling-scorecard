@@ -17,12 +17,14 @@ Player.prototype.setFrameVariables = function() {
 };
 
 Player.prototype.outputScore = function() {
+  var score = [];
   for (var i = 0; i < this.framesArray.length; i++) {
     // this.calculateTotal();
-    [
+    score.push([
       this.framesArray[i].first,
       this.framesArray[i].second,
-      this.runningTotal + this.framesArray[i].totalFrame
-    ];
+      (this.runningTotal += this.framesArray[i].totalFrame)
+    ]);
   }
+  return score;
 };
