@@ -16,19 +16,13 @@ Player.prototype.setFrameVariables = function() {
   }
 };
 
-Player.prototype.calculateTotal = function() {
-  for (var i = 0; i < this.framesArray.length; i++) {
-    this.runningTotal += this.framesArray[i].totalFrame;
-  }
-};
-
 Player.prototype.outputScore = function() {
   for (var i = 0; i < this.framesArray.length; i++) {
     // this.calculateTotal();
-    return [
+    [
       this.framesArray[i].first,
-      this.framesArray[i].second
-      // this.runningTotal
+      this.framesArray[i].second,
+      this.runningTotal + this.framesArray[i].totalFrame
     ];
   }
 };

@@ -32,16 +32,6 @@ describe("Game", function() {
     });
   });
 
-  describe("#calculateTotal", function() {
-    it("calculates the total running score", function() {
-      player.entry(3, 5);
-      player.entry(4, 4);
-      player.entry(2, 6);
-      player.outputScore();
-      expect(player.runningTotal).toEqual(24);
-    });
-  });
-
   // describe("#calculateBonus", function() {
   //   it("adds the extra points to the total score if the previous bowl has a spare", function() {
   //     player.entry(5, 5);
