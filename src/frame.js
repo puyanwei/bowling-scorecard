@@ -23,7 +23,7 @@ Frame.prototype.tenPinsGoneCheck = function() {
 };
 
 Frame.prototype.spareCheck = function() {
-  if (this.first + this.second == 10) {
+  if (this.first + this.second == 10 && this.first !== 10) {
     this.spare = true;
   }
 };

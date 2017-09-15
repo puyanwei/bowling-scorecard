@@ -15,28 +15,16 @@ describe("Game", function() {
     });
   });
 
-  describe("#setFrameVariables", function() {
-    it("sets the variable for a frame", function() {
-      player.entry(3, 4);
-      expect(player.currentFrame).toEqual(
-        player.framesArray[player.framesArray.length - 1]
-      );
-    });
-    it("sets the variable for the prev frame if one exists", function() {
-      player.entry(3, 4);
-      player.entry(5, 4);
-      player.entry(3, 6);
-      expect(player.prevFrame).toEqual(
-        player.framesArray[player.framesArray.length - 2]
-      );
-    });
-  });
-
-  describe("#calculateBonus", function() {
+  describe("#wasSpare", function() {
     it("adds the extra points to the total score if the previous bowl has a spare", function() {
       player.entry(5, 5);
-      player.entry(4, 3);
-      expect(player.outputScore()).toEqual([5, 5, 14][(4, 3, 21)]);
+      player.entry(6, 3);
+      player.entry(0, 10);
+      player.entry(0, 5);
+
+      console.log(player.framesArray);
+      console.log(player.score);
+      expect(player.outputScore()).toEqual([[5, 5, 14], [4, 3, 21]]);
     });
   });
 
