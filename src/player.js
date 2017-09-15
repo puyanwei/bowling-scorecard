@@ -23,6 +23,12 @@ Player.prototype.calculateTotal = function() {
 };
 
 Player.prototype.outputScore = function() {
-  this.calculateTotal();
-  return [this.currentFrame.first, this.currentFrame.second, this.runningTotal];
+  for (var i = 0; i < this.framesArray.length; i++) {
+    // this.calculateTotal();
+    return [
+      this.framesArray[i].first,
+      this.framesArray[i].second
+      // this.runningTotal
+    ];
+  }
 };
