@@ -32,19 +32,21 @@ describe("Game", function() {
     });
   });
 
-  fdescribe("#outputScore", function() {
-    it("outputs the correct score", function() {
-      player.entry(3, 5);
-      expect(player.outputScore()).toEqual([3, 5, 8]);
-    });
-  });
-
   describe("#calculateTotal", function() {
     it("calculates the total running score", function() {
       player.entry(3, 5);
       player.entry(4, 4);
       player.entry(2, 6);
-      expect(player.calculateTotal()).toEqual(15);
+      player.outputScore();
+      expect(player.runningTotal).toEqual(24);
+    });
+  });
+
+  describe("#outputScore", function() {
+    it("outputs bowls and the running score", function() {
+      player.entry(3, 5);
+      player.entry(4, 5);
+      expect(player.outputScore()).toEqual([4, 5, 17]);
     });
   });
 });

@@ -1,7 +1,6 @@
 var Player = function() {
   this.framesArray = [];
-  this.currentFrame = 0;
-  this.prevFrame = 0;
+  this.runningTotal = 0;
 };
 
 Player.prototype.entry = function(first, second) {
@@ -15,21 +14,15 @@ Player.prototype.setFrameVariables = function() {
   if (this.framesArray.length > 1) {
     this.prevFrame = this.framesArray[this.framesArray.length - 2];
   }
-  this.calculateTotal();
 };
 
 Player.prototype.calculateTotal = function() {
-  if (this.framesArray.length < 1) {
-    this.outputScore(this.currentFrame.totalFrame);
-  } else {
-    this.outputScore(
-      (this.prevFrame.totalFrame += this.currentFrame.totalFrame)
-    );
+  for (var i = 0; i < this.framesArray.length; i++) {
+    this.runningTotal += this.framesArray[i].totalFrame;
   }
 };
 
-Player.prototype.outputScore = function(runningTotal) {
-  this.runningTotal = runningTotal;
-  console.log(878);
+Player.prototype.outputScore = function() {
+  this.calculateTotal();
   return [this.currentFrame.first, this.currentFrame.second, this.runningTotal];
 };
