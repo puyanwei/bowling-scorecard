@@ -9,32 +9,32 @@ Player.prototype.entry = function(first, second) {
   this.framesArray.push(frame);
 };
 
-Player.prototype.calculateBonus = function() {
-  for (var i = 1; i < this.framesArray.length; i++) {
-    this.wasSpare(i);
-  }
-};
+// Player.prototype.calculateBonus = function() {
+//   for (var i = 1; i < this.framesArray.length; i++) {
+//     this.wasSpare(i);
+//   }
+// };
 
 Player.prototype.wasSpare = function(i) {
   if (this.framesArray[i - 1].spare) {
-    this.score[i - 1][2] += this.framesArray[i].first;
-    console.log("first " + this.framesArray[i].first);
-    console.log("prevFrameTotal " + this.score[i - 1][2]);
-    this.score[i][2] += this.framesArray[i].totalFrame;
-    console.log("first " + this.framesArray[i].first);
-    console.log("thisFrameTotal " + this.score[i][2]);
+    this.framesArray[i - 1].totalFrame =
+      this.framesArray[i].first + this.framesArray[i - 1].totalFrame;
   }
 };
-
+//
 Player.prototype.outputScore = function() {
   for (var i = 0; i < this.framesArray.length; i++) {
+    if (i > 0) {
+      this.wasSpare(i);
+    }
     this.score.push([
+      console.log(i),
+      console.log(this.framesArray[i].totalFrame),
       this.framesArray[i].first,
       this.framesArray[i].second,
-      (this.runningTotal += this.framesArray[i].totalFrame)
+      this.framesArray[i].totalFrame
     ]);
   }
-  console.log("preChange " + this.score);
-  this.calculateBonus();
+  // this.calculateBonus();
   return this.score;
 };
