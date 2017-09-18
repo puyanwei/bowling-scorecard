@@ -24,7 +24,12 @@ describe("Game", function() {
 
       console.log(player.framesArray);
       console.log(player.score);
-      expect(player.outputScore()).toEqual([[5, 5, 14], [4, 3, 21]]);
+      expect(player.outputScore()).toEqual([
+        [5, 5, 14],
+        [4, 3, 21],
+        [0, 10, 33],
+        [2, 5, 40]
+      ]);
     });
   });
 });
