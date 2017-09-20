@@ -19,21 +19,21 @@ describe("Player", function() {
     });
   });
 
-  describe("#strikeCheck", function() {
+  describe("#isStrike", function() {
     it("sets strike to be true", function() {
       frame = new Frame(10, 0);
-      expect(frame.strike).toBe(true);
+      expect(frame.isStrike()).toBe(true);
     });
   });
 
-  describe("#spareCheck", function() {
+  describe("#isSpare", function() {
     it("sets spare to be true", function() {
       frame = new Frame(5, 5);
-      expect(frame.spare).toBe(true);
+      expect(frame.isSpare()).toBe(true);
     });
     it("sets spare to be true", function() {
       frame = new Frame(0, 10);
-      expect(frame.spare).toBe(true);
+      expect(frame.isSpare()).toBe(true);
     });
   });
 });

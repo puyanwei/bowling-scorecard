@@ -9,32 +9,40 @@ Player.prototype.entry = function(first, second) {
   this.framesArray.push(frame);
 };
 
-// Player.prototype.calculateBonus = function() {
+Player.prototype._frameNumber = function() {
+  return this.framesArray.length;
+};
+
+Player.prototype._prevTotalFrame = function() {
+  if (this.framesArray.length > 1) {
+    return this.framesArray[-1];
+  }
+};
+
+// Player.prototype.wasStrike = function() {
 //   for (var i = 1; i < this.framesArray.length; i++) {
-//     this.wasSpare(i);
+//     if (this.framesArray[i - 1].isStrike()) {
+//       this.framesArray[i - 1].totalFrame += this.framesArray[i].totalFrame;
+//     }
+//   }
+// };
+//
+// Player.prototype.wasSpare = function() {
+//   for (var i = 1; i < this.framesArray.length; i++) {
+//     if (this.framesArray[i - 1].isSpare()) {
+//       this.framesArray[i - 1].totalFrame =
+//         this.framesArray[i].first + this.framesArray[i - 1].totalFrame;
+//     }
 //   }
 // };
 
-Player.prototype.wasStrike = function() {
-  for (var i = 1; i < this.framesArray.length; i++) {
-    if (this.framesArray[i - 1].strike) {
-      this.framesArray[i - 1].totalFrame += this.framesArray[i].totalFrame;
-    }
-  }
-};
-
-Player.prototype.wasSpare = function() {
-  for (var i = 1; i < this.framesArray.length; i++) {
-    if (this.framesArray[i - 1].spare) {
-      this.framesArray[i - 1].totalFrame =
-        this.framesArray[i].first + this.framesArray[i - 1].totalFrame;
-    }
-  }
+Player.prototype.calculateBonus = function() {
+  this.wasSpare();
+  this.wasStrike();
 };
 
 Player.prototype.outputScore = function() {
-  this.wasSpare();
-  this.wasStrike();
+  this.calculateBonus();
   for (var i = 0; i < this.framesArray.length; i++) {
     this.score.push([
       this.framesArray[i].first,

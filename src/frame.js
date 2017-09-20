@@ -1,11 +1,7 @@
 var Frame = function(first, second) {
   this.errorCheck(first, second);
-  this.strike = false;
-  this.spare = false;
   this.first = first;
   this.second = second;
-  this.totalFrame = this.first + this.second;
-  this.tenPinsGoneCheck();
 };
 
 Frame.prototype.errorCheck = function(first, second) {
@@ -17,19 +13,19 @@ Frame.prototype.errorCheck = function(first, second) {
   }
 };
 
-Frame.prototype.tenPinsGoneCheck = function() {
-  this.spareCheck();
-  this.strikeCheck();
+Frame.prototype.totalFrame = function(first, second) {
+  this.totalFrame = first + second;
 };
 
-Frame.prototype.spareCheck = function() {
+Frame.prototype.isStrike = function() {
+  if (this.first == 10) {
+    return true;
+  }
+};
+
+Frame.prototype.isSpare = function() {
   if (this.first + this.second == 10 && this.first !== 10) {
     this.spare = true;
   }
-};
-
-Frame.prototype.strikeCheck = function() {
-  if (this.first == 10) {
-    this.strike = true;
-  }
+  return this.spare;
 };
