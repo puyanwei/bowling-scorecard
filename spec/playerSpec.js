@@ -27,7 +27,8 @@ describe("Game", function() {
     it("shows the values of the previous frame", function() {
       player.entry(3, 5);
       player.entry(6, 2);
-      expect(player._prevTotalFrame()).toEqual(8);
+      expect(player._prevFrame().first).toEqual(3);
+      expect(player._prevFrame().second).toEqual(5);
     });
   });
 

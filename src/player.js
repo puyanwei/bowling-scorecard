@@ -13,10 +13,11 @@ Player.prototype._frameNumber = function() {
   return this.framesArray.length;
 };
 
-Player.prototype._prevTotalFrame = function() {
-  if (this.framesArray.length > 1) {
-    return this.framesArray[-1];
+Player.prototype._prevFrame = function() {
+  if (this._frameNumber() == 0) {
+    return new Frame(0, 0);
   }
+  return this.framesArray[this._frameNumber() - 2];
 };
 
 // Player.prototype.wasStrike = function() {
