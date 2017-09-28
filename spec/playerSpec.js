@@ -23,7 +23,7 @@ describe("Game", function() {
     });
   });
 
-  describe("#_prevTotalFrame", function() {
+  describe("#_prevFrame", function() {
     it("shows the values of the previous frame", function() {
       player.entry(3, 5);
       player.entry(6, 2);
@@ -32,39 +32,37 @@ describe("Game", function() {
     });
   });
 
-  // describe("#wasSpare", function() {
-  //   it("adds the extra points of the first bowl to the total score if the previous bowl has a spare", function() {
-  //     player.entry(5, 5);
-  //     player.entry(4, 3);
-  //     player.entry(0, 10);
-  //     player.entry(2, 5);
-  //     expect(player.outputScore()).toEqual([
-  //       [5, 5, 14],
-  //       [4, 3, 21],
-  //       [0, 10, 33],
-  //       [2, 5, 40]
-  //     ]);
-  //   });
-  // });
-  // describe("#wasStrike", function() {
-  //   it("adds the extra points of two bowls to the total score if the previous bowl has a strike", function() {
-  //     player.entry(10, 0);
-  //     player.entry(5, 3);
-  //     player.entry(10, 0);
-  //     player.entry(3, 6);
-  //     expect(player.outputScore()).toEqual([
-  //       [10, 0, 18],
-  //       [5, 3, 26],
-  //       [10, 0, 45],
-  //       [3, 6, 54]
-  //     ]);
-  //   });
-  // });
-  //   describe("#outputScore", function() {
-  //     it("outputs all bowls and the running score", function() {
-  //       player.entry(3, 5);
-  //       player.entry(4, 5);
-  //       expect(player.outputScore()).toEqual([[3, 5, 8], [4, 5, 17]]);
-  //     });
-  //   });
+  describe("#_thisFrame", function() {
+    it("shows the values of the current frame", function() {
+      player.entry(3, 5);
+      player.entry(6, 2);
+      expect(player._currentFrame().first).toEqual(6);
+      expect(player._currentFrame().second).toEqual(2);
+    });
+  });
+
+  describe("_addToScoreArray", function() {
+    it("outputs all bowls and the running score to the score array", function() {
+      player.entry(3, 5);
+      player.entry(4, 5);
+      expect(player.outputScore()).toEqual([[3, 5, 8], [4, 5, 17]]);
+    });
+  });
+
+  describe("#outputScore", function() {
+    it("outputs the score", function() {
+      player.entry(4, 5);
+      player.entry(3, 5);
+      expect(player.outputScore()).toEqual([[4, 5, 9], [3, 5, 17]]);
+    });
+  });
+
+  describe("#_prevTotal", function() {
+    it("returns the previous frame total score", function() {
+      player.entry(3, 4);
+      player.entry(3, 6);
+      player.outputScore();
+      expect(player._prevTotal()).toEqual(7);
+    });
+  });
 });

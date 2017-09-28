@@ -13,19 +13,20 @@ Frame.prototype.errorCheck = function(first, second) {
   }
 };
 
-Frame.prototype.totalFrame = function(first, second) {
-  this.totalFrame = first + second;
+Frame.prototype.totalFrame = function() {
+  return this.first + this.second;
 };
 
 Frame.prototype.isStrike = function() {
   if (this.first == 10) {
     return true;
   }
+  return false;
 };
 
 Frame.prototype.isSpare = function() {
-  if (this.first + this.second == 10 && this.first !== 10) {
-    this.spare = true;
+  if (this.totalFrame() == 10 && this.first !== 10) {
+    return true;
   }
-  return this.spare;
+  return false;
 };
