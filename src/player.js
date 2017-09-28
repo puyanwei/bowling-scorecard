@@ -1,6 +1,6 @@
 var Player = function() {
   this.framesArray = [];
-  this.score = [];
+  this.scoreCard = [];
   this.runningTotal = 0;
 };
 
@@ -25,15 +25,16 @@ Player.prototype._currentFrame = function() {
 };
 
 Player.prototype._prevTotal = function() {
-  if (this.score.length == 1) {
+  if (this.scoreCard.length == 1) {
     return 0;
   }
-  return this.score[this._frameNumber() - 2][2];
+  return this.scoreCard[this._frameNumber() - 2][2];
 };
 
 Player.prototype._addToScoreArray = function() {
+  this.reset();
   for (var i = 0; i < this.framesArray.length; i++) {
-    this.score.push([
+    this.scoreCard.push([
       this.framesArray[i].first,
       this.framesArray[i].second,
       (this.runningTotal += this.framesArray[i].totalFrame())
@@ -41,9 +42,12 @@ Player.prototype._addToScoreArray = function() {
   }
 };
 
+Player.prototype.reset = function() {
+  this.scoreCard = [];
+  this.runningTotal = 0;
+};
+
 Player.prototype.outputScore = function() {
   this._addToScoreArray();
-  console.log(this.score);
-  console.log(this.framesArray);
-  return this.score;
+  return this.scoreCard;
 };

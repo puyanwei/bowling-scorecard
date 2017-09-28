@@ -55,6 +55,19 @@ describe("Game", function() {
       player.entry(3, 5);
       expect(player.outputScore()).toEqual([[4, 5, 9], [3, 5, 17]]);
     });
+    it("outputs the correct score when more entries happen after score outputted once", function() {
+      player.entry(4, 5);
+      player.entry(3, 5);
+      expect(player.outputScore()).toEqual([[4, 5, 9], [3, 5, 17]]);
+      player.entry(3, 4);
+      player.entry(3, 6);
+      expect(player.outputScore()).toEqual([
+        [4, 5, 9],
+        [3, 5, 17],
+        [3, 4, 24],
+        [3, 6, 33]
+      ]);
+    });
   });
 
   describe("#_prevTotal", function() {
@@ -63,6 +76,16 @@ describe("Game", function() {
       player.entry(3, 6);
       player.outputScore();
       expect(player._prevTotal()).toEqual(7);
+    });
+  });
+
+  describe("#reset", function() {
+    it("resets the scorecard", function() {
+      player.entry(3, 4);
+      player.entry(3, 6);
+      expect(player.outputScore()).toEqual([[3, 4, 7], [3, 6, 16]]);
+      player.reset();
+      expect(player.scoreCard).toEqual([]);
     });
   });
 });
