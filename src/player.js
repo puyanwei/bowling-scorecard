@@ -32,14 +32,14 @@ Player.prototype._prevTotal = function() {
 };
 
 Player.prototype._addToScoreArray = function() {
-  this.reset();
-  for (var i = 0; i < this.framesArray.length; i++) {
-    this.scoreCard.push([
-      this.framesArray[i].first,
-      this.framesArray[i].second,
-      (this.runningTotal += this.framesArray[i].totalFrame())
-    ]);
-  }
+  this.scoreCard.push([
+    this.framesArray.first,
+    this.framesArray.second,
+    (this.runningTotal += this.framesArray[
+      this._frameNumber() - 1
+    ].totalFrame())
+  ]);
+  console.log(this.framesArray[this._frameNumber() - 1].totalFrame());
 };
 
 Player.prototype.reset = function() {
@@ -49,5 +49,6 @@ Player.prototype.reset = function() {
 
 Player.prototype.outputScore = function() {
   this._addToScoreArray();
+  // this._addSparePoints();
   return this.scoreCard;
 };
