@@ -1,3 +1,3 @@
 $(document).ready(() => {
-  var gmae = new Game();
+  var player = new Player();
 });
