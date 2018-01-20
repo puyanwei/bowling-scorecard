@@ -10,8 +10,8 @@
   <h2>Bowling Scorecard</h2>
 
   <div>
-    <table id='table'>
-      <tr>
+    <table id='scorecard'>
+      <tr class="header-container">
         <th></th>
         <th>Frame 1</th>
         <th>Frame 2</th>
@@ -24,14 +24,18 @@
         <th>Frame 9</th>
         <th>Frame 10</th>
       </tr>
-      <tr>
-        <td>Player 1</td>
-        <td>
-          <table>
-            <td class="innercell">A</td>
-          </table>
+      <tr class="lower-container">
+        <td id="name">Player 1</td>
+        <td class="frame-one">
+          <div><span id=first>1</span>&emsp;<span id=second>7</span></div>
+          <br>
+          <div id="total">22</div>
         </td>
-        <td></td>
+        <td class="frame-two">
+          <div><span id=first></span>&emsp;<span id=second></span></div>
+          <br>
+          <div id="total"></div>
+        </td>
         <td></td>
         <td></td>
         <td></td>
