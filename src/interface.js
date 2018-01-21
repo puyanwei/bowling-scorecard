@@ -1,8 +1,9 @@
 $(document).ready(() => {
   var player = new Player();
   var frame = new Frame();
+  var bowls = document.getElementsByTagName("span");
 
   $(".button").on("click", () => {
-    console.log("hello");
+    bowls[0].innerText = "hello";
   });
 });
