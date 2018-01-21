@@ -8,4 +8,6 @@ $(document).ready(() => {
     bowls[number].innerText = $(this).val();
     number++;
   });
+
+  var totals = function() {};
 });
