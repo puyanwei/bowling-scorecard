@@ -5,6 +5,7 @@ $(document).ready(() => {
   var bowls = document.getElementsByTagName("span");
 
   $(".button").click(function() {
-    console.log($(this).val());
+    bowls[number].innerText = $(this).val();
+    number++;
   });
 });
