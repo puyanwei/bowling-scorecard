@@ -7,13 +7,13 @@ $(document).ready(() => {
     var bowls = $("span")[frameScoreIndex];
     var buttonValue = $(this).val();
     addScoreToPage(bowls, buttonValue);
-    score = convertStringToNumber(bowls.innerText);
-    calculateTotals(score);
+    calculateTotals(bowls);
     frameScoreIndex++;
   });
 
-  var calculateTotals = function(score) {
+  var calculateTotals = function(bowls) {
     var total;
+    score = convertStringToNumber(bowls.innerText);
     allBowls.push(score);
     if (hasEvenIndex(allBowls)) {
       total = sumArray(allBowls);
