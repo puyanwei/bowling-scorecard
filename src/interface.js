@@ -6,14 +6,14 @@ $(document).ready(() => {
   $(".button").click(function() {
     var bowls = $("span")[frameNumberScore];
     bowls.innerText = $(this).val();
-    calculateTotals(bowls.innerText);
+    score = convertStringToNumber(bowls.innerText);
+    calculateTotals(score);
     frameNumberScore++;
   });
 
   var calculateTotals = function(score) {
     var total;
-    var bowls = convertStringToNumber(score);
-    allBowls.push(bowls);
+    allBowls.push(score);
     if (hasEvenIndex(allBowls)) {
       total = sumArray(allBowls);
       addTotalToPage(total);
