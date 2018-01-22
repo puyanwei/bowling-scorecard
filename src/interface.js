@@ -5,7 +5,8 @@ $(document).ready(() => {
 
   $(".button").click(function() {
     var bowls = $("span")[frameNumberScore];
-    bowls.innerText = $(this).val();
+    var buttonValue = $(this).val();
+    addScoreToPage(bowls, buttonValue);
     score = convertStringToNumber(bowls.innerText);
     calculateTotals(score);
     frameNumberScore++;
@@ -31,6 +32,10 @@ $(document).ready(() => {
 
   var sumArray = function(array) {
     return array.reduce((a, b) => a + b, 0);
+  };
+
+  var addScoreToPage = function(bowls, buttonValue) {
+    bowls.innerText = buttonValue;
   };
 
   var addTotalToPage = function(total) {
