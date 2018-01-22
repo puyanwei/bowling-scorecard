@@ -1,15 +1,15 @@
 $(document).ready(() => {
-  var frameNumberScore = 0;
-  var frameNumberTotal = 0;
-  allBowls = [];
+  var frameScoreIndex = 0;
+  var frameTotalIndex = 0;
+  var allBowls = [];
 
   $(".button").click(function() {
-    var bowls = $("span")[frameNumberScore];
+    var bowls = $("span")[frameScoreIndex];
     var buttonValue = $(this).val();
     addScoreToPage(bowls, buttonValue);
     score = convertStringToNumber(bowls.innerText);
     calculateTotals(score);
-    frameNumberScore++;
+    frameScoreIndex++;
   });
 
   var calculateTotals = function(score) {
@@ -18,7 +18,7 @@ $(document).ready(() => {
     if (hasEvenIndex(allBowls)) {
       total = sumArray(allBowls);
       addTotalToPage(total);
-      frameNumberTotal++;
+      frameTotalIndex++;
     }
   };
 
@@ -39,6 +39,6 @@ $(document).ready(() => {
   };
 
   var addTotalToPage = function(total) {
-    $(".total")[frameNumberTotal].innerText = total;
+    $(".total")[frameTotalIndex].innerText = total;
   };
 });
