@@ -16,7 +16,7 @@ $(document).ready(() => {
     allBowls.push(bowls);
     if (hasEvenIndex(allBowls)) {
       total = sumArray(allBowls);
-      $(".total")[frameNumberTotal].innerText = total;
+      addTotalToPage(total);
       frameNumberTotal++;
     }
   };
@@ -31,5 +31,9 @@ $(document).ready(() => {
 
   var sumArray = function(array) {
     return array.reduce((a, b) => a + b, 0);
+  };
+
+  var addTotalToPage = function(total) {
+    $(".total")[frameNumberTotal].innerText = total;
   };
 });
