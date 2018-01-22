@@ -12,12 +12,24 @@ $(document).ready(() => {
 
   var calculateTotals = function(score) {
     var total;
-    var bowls = parseInt(score);
+    var bowls = convertStringToNumber(score);
     allBowls.push(bowls);
-    if (allBowls.length % 2 == 0) {
-      total = allBowls.reduce((a, b) => a + b, 0);
+    if (hasEvenIndex(allBowls)) {
+      total = sumArray(allBowls);
       $(".total")[frameNumberTotal].innerText = total;
       frameNumberTotal++;
     }
+  };
+
+  var convertStringToNumber = function(string) {
+    return parseInt(string);
+  };
+
+  var hasEvenIndex = function(array) {
+    return array.length % 2 == 0;
+  };
+
+  var sumArray = function(array) {
+    return array.reduce((a, b) => a + b, 0);
   };
 });
