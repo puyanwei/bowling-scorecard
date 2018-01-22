@@ -1,23 +1,23 @@
 $(document).ready(() => {
-  var number = 0;
-  array = [];
+  var frameNumberScore = 0;
+  var frameNumberTotal = 0;
+  allBowls = [];
 
   $(".button").click(function() {
-    var bowls = $("span")[number];
+    var bowls = $("span")[frameNumberScore];
     bowls.innerText = $(this).val();
     calculateTotals(bowls.innerText);
-    number++;
+    frameNumberScore++;
   });
 
   var calculateTotals = function(score) {
     var total;
-    var number = parseInt(score);
-    array.push(number);
-    if (array.length % 2 == 0) {
-      total = array.reduce((a, b) => a + b, 0);
-    } else {
-      total = "";
+    var bowls = parseInt(score);
+    allBowls.push(bowls);
+    if (allBowls.length % 2 == 0) {
+      total = allBowls.reduce((a, b) => a + b, 0);
+      $(".total")[frameNumberTotal].innerText = total;
+      frameNumberTotal++;
     }
-    $(".total")[0].innerText = total;
   };
 });
