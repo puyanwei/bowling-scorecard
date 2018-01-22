@@ -15,6 +15,8 @@ $(document).ready(() => {
     array.push(number);
     if (array.length % 2 == 0) {
       total = array.reduce((a, b) => a + b, 0);
+    } else {
+      total = "";
     }
     $(".total")[0].innerText = total;
   };
