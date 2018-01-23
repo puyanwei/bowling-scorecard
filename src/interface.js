@@ -4,22 +4,29 @@ $(document).ready(() => {
   var allBowls = [];
 
   $(".button").click(function() {
-    var bowls = $("span")[frameScoreIndex];
+    var bowlsSpan = $("span")[frameScoreIndex];
     var buttonValue = $(this).val();
-    addScoreToPage(bowls, buttonValue);
-    calculateTotals(bowls);
+    addScoreToPage(bowlsSpan, buttonValue);
+    calculateTotals(bowlsSpan);
     frameScoreIndex++;
   });
 
-  var calculateTotals = function(bowls) {
+  var calculateTotals = function(bowlsSpan) {
     var total;
-    score = convertStringToNumber(bowls.innerText);
+    score = convertStringToNumber(bowlsSpan.innerText);
     allBowls.push(score);
     if (hasEvenIndex(allBowls)) {
       total = sumArray(allBowls);
+      hideButtonsIfSumOverTen();
       addTotalToPage(total);
       frameTotalIndex++;
     }
+  };
+
+  var hideButtonsIfSumOverTen = function() {
+    $(".button")
+      .eq(4)
+      .hide();
   };
 
   var convertStringToNumber = function(string) {
@@ -34,8 +41,8 @@ $(document).ready(() => {
     return array.reduce((a, b) => a + b, 0);
   };
 
-  var addScoreToPage = function(bowls, buttonValue) {
-    bowls.innerText = buttonValue;
+  var addScoreToPage = function(bowlsSpan, buttonValue) {
+    bowlsSpan.innerText = buttonValue;
   };
 
   var addTotalToPage = function(total) {
