@@ -20,7 +20,7 @@ $(document).ready(() => {
       total = sumArray(allBowls);
       addTotalToPage(total);
       frameTotalIndex++;
-      $(".button").show();
+      resetButtons();
     }
   };
 
@@ -28,6 +28,10 @@ $(document).ready(() => {
     $(".button")
       .eq(buttonValue - 1)
       .hide();
+  };
+
+  var resetButtons = function() {
+    $(".button").show();
   };
 
   var convertStringToNumber = function(string) {
