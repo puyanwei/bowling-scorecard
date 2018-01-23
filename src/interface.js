@@ -28,6 +28,7 @@ $(document).ready(() => {
     $(".button")
       .eq(buttonValue - 1)
       .hide();
+    console.log(10 - buttonValue);
   };
 
   var resetButtons = function() {
