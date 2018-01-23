@@ -5,8 +5,9 @@ $(document).ready(() => {
 
   $(".button").click(function() {
     var bowlsSpan = $("span")[frameScoreIndex];
-    var buttonValue = $(this).val();
+    buttonValue = $(this).val();
     addScoreToPage(bowlsSpan, buttonValue);
+    hideButtonsIfSumOverTen(buttonValue);
     calculateTotals(bowlsSpan);
     frameScoreIndex++;
   });
@@ -17,15 +18,15 @@ $(document).ready(() => {
     allBowls.push(score);
     if (hasEvenIndex(allBowls)) {
       total = sumArray(allBowls);
-      hideButtonsIfSumOverTen();
       addTotalToPage(total);
       frameTotalIndex++;
+      $(".button").show();
     }
   };
 
-  var hideButtonsIfSumOverTen = function() {
+  var hideButtonsIfSumOverTen = function(buttonValue) {
     $(".button")
-      .eq(4)
+      .eq(buttonValue - 1)
       .hide();
   };
 
