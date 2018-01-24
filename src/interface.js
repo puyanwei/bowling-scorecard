@@ -5,18 +5,6 @@ $(document).ready(() => {
   var allSpans = $("span");
   var totalClass = $(".total");
 
-  $(".button").click(function() {
-    var bowlValue = parseInt($(this).val());
-    updateScore(bowlValue);
-  });
-
-  var updateScore = function(bowlValue) {
-    addScoreToPage(bowlValue);
-    hideButtonsIfSumOverTen(bowlValue);
-    calculateTotals(bowlValue);
-    frameScoreIndex++;
-  };
-
   var bowlsSpan = function() {
     return allSpans[frameScoreIndex];
   };
@@ -25,19 +13,26 @@ $(document).ready(() => {
     return totalClass[frameTotalIndex];
   };
 
-  var calculateTotals = function(score) {
+  $(".button").click(function() {
+    var bowlValue = parseInt($(this).val());
+    updateScore(bowlValue);
+  });
+
+  var updateScore = function(bowlValue) {
+    addSingleScoreToPage(bowlValue);
+    hideButtonsIfSumOverTen(bowlValue);
+    calculateTotals(bowlValue);
+    frameScoreIndex++;
+  };
+
+  var calculateTotals = function(bowlValue) {
     var total;
-    scoreCardArray.push(score);
+    scoreCardArray.push(bowlValue);
     if (hasEvenIndex(scoreCardArray)) {
       total = sumArray(scoreCardArray);
       addTotalToPage(total);
       frameTotalIndex++;
       resetButtons();
-    }
-  };
-
-  var ifStrike = function(bowlValue) {
-    if (bowlValue === 10) {
     }
   };
 
@@ -64,7 +59,7 @@ $(document).ready(() => {
     return array.reduce((a, b) => a + b, 0);
   };
 
-  var addScoreToPage = function(bowlValue) {
+  var addSingleScoreToPage = function(bowlValue) {
     bowlsSpan().innerText = bowlValue;
     ifStrike(bowlValue);
   };
