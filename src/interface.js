@@ -14,7 +14,12 @@ $(document).ready(() => {
   };
 
   $(".button").click(function() {
-    var bowlValue = parseInt($(this).val());
+    var bowlValue;
+    if ($(this).val() === "X") {
+      bowlValue = 10;
+    } else {
+      bowlValue = parseInt($(this).val());
+    }
     updateScore(bowlValue);
   });
 
