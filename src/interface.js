@@ -42,6 +42,7 @@ $(document).ready(() => {
     if (bowlValue === 10) {
       frameScoreIndex++;
       addSingleScoreToPage(0);
+      scoreCardArray.push(0);
     }
   };
 
