@@ -25,10 +25,19 @@ $(document).ready(() => {
   };
 
   var hideButtonsIfSumOverTen = function(buttonValue) {
-    $(".button")
-      .eq(buttonValue - 1)
-      .hide();
-    console.log(10 - buttonValue);
+    var hiddenButtons = 10 - buttonValue;
+    var array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+    array.forEach(function(element) {
+      if (element > 10 - buttonValue) {
+        $(`#${element}`).hide();
+      }
+    });
+
+    // array.splice(0, buttonValue);
+    // $(".button")
+    //   .eq(buttonValue - 1)
+    //   .hide();
   };
 
   var resetButtons = function() {
