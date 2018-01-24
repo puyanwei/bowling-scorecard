@@ -5,22 +5,28 @@ $(document).ready(() => {
 
   $(".button").click(function() {
     var bowlsSpan = $("span")[frameScoreIndex];
-    buttonValue = $(this).val();
+    var buttonValue = parseInt($(this).val());
     addScoreToPage(bowlsSpan, buttonValue);
     hideButtonsIfSumOverTen(buttonValue);
-    calculateTotals(bowlsSpan);
+    calculateTotals(buttonValue);
     frameScoreIndex++;
   });
 
-  var calculateTotals = function(bowlsSpan) {
+  var calculateTotals = function(score) {
     var total;
-    score = convertStringToNumber(bowlsSpan.innerText);
+    console.log(score);
+    console.log(allBowls);
+
     allBowls.push(score);
     if (hasEvenIndex(allBowls)) {
       total = sumArray(allBowls);
       addTotalToPage(total);
       frameTotalIndex++;
       resetButtons();
+    }
+    if (score === 10) {
+      calculateTotals(0);
+      console.log("is Ten");
     }
   };
 
@@ -30,17 +36,13 @@ $(document).ready(() => {
 
     array.forEach(function(value) {
       if (value > remainingPins) {
-        $(`#${element}`).hide();
+        $(`#${value}`).hide();
       }
     });
   };
 
   var resetButtons = function() {
     $(".button").show();
-  };
-
-  var convertStringToNumber = function(string) {
-    return parseInt(string);
   };
 
   var hasEvenIndex = function(array) {
