@@ -20,6 +20,7 @@ $(document).ready(() => {
 
   var updateScore = function(bowlValue) {
     bowlValue = symbolOrNumber(bowlValue);
+    scoreCardArray.push(bowlValue);
     hideButtonsIfSumOverTen(bowlValue);
     addSingleScoreToPage(bowlValue);
     ifStrike(bowlValue);
@@ -29,8 +30,6 @@ $(document).ready(() => {
 
   var calculateTotals = function(bowlValue) {
     var total;
-
-    scoreCardArray.push(bowlValue);
     if (hasEvenIndex(scoreCardArray)) {
       total = sumArray(scoreCardArray);
       addTotalToPage(total);
