@@ -23,15 +23,14 @@ $(document).ready(() => {
     scoreCardArray.push(bowlValue);
     hideButtonsIfSumOverTen(bowlValue);
     addSingleScoreToPage(bowlValue);
-    ifStrike(bowlValue);
+    isStrike(bowlValue);
     calculateTotals(bowlValue);
     frameScoreIndex++;
   };
 
   var calculateTotals = function(bowlValue) {
-    var total;
     if (hasEvenIndex(scoreCardArray)) {
-      total = sumArray(scoreCardArray);
+      var total = sumArray(scoreCardArray);
       addTotalToPage(total);
       frameTotalIndex++;
       resetButtons();
@@ -46,7 +45,7 @@ $(document).ready(() => {
     }
   };
 
-  var ifStrike = function(bowlValue) {
+  var isStrike = function(bowlValue) {
     if (bowlValue === 10) {
       frameScoreIndex++;
       addSingleScoreToPage(0);
