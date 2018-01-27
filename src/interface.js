@@ -14,19 +14,15 @@ $(document).ready(() => {
   };
 
   $(".button").click(function() {
-    var bowlValue;
-    if ($(this).val() === "X") {
-      bowlValue = 10;
-    } else {
-      bowlValue = parseInt($(this).val());
-    }
+    var bowlValue = $(this).val();
     updateScore(bowlValue);
   });
 
   var updateScore = function(bowlValue) {
+    bowlValue = symbolOrNumber(bowlValue);
+    hideButtonsIfSumOverTen(bowlValue);
     addSingleScoreToPage(bowlValue);
     ifStrike(bowlValue);
-    hideButtonsIfSumOverTen(bowlValue);
     calculateTotals(bowlValue);
     frameScoreIndex++;
   };
@@ -40,6 +36,14 @@ $(document).ready(() => {
       addTotalToPage(total);
       frameTotalIndex++;
       resetButtons();
+    }
+  };
+
+  var symbolOrNumber = function(bowlValue) {
+    if (bowlValue === "X") {
+      return 10;
+    } else {
+      return parseInt(bowlValue);
     }
   };
 
