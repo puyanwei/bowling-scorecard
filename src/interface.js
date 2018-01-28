@@ -41,7 +41,8 @@ $(document).ready(() => {
   var isSpare = function() {
     var firstBowl = scoreCardArray[frameBowlIndex - 1];
     var secondBowl = scoreCardArray[frameBowlIndex];
-    if (firstBowl + secondBowl === 10 && firstBowl !== 0 && secondBowl !== 0) {
+
+    if (firstBowl + secondBowl === 10 && secondBowl !== 0) {
       console.log("its a spare");
     }
   };
@@ -51,7 +52,7 @@ $(document).ready(() => {
   };
 
   var ifStrikeNextBowlZero = function(bowlValue) {
-    if (bowlValue === 10) {
+    if (bowlValue === 10 && !hasEvenIndex(scoreCardArray)) {
       isStrike();
       frameBowlIndex++;
       addSingleScoreToPage(0);
