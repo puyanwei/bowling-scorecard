@@ -23,7 +23,7 @@ $(document).ready(() => {
     scoreCardArray.push(bowlValue);
     hideButtonsIfSumOverTen(bowlValue);
     addSingleScoreToPage(bowlValue);
-    isStrike(bowlValue);
+    ifStrikeNextBowlZero(bowlValue);
     calculateTotals(bowlValue);
     frameScoreIndex++;
   };
@@ -37,15 +37,25 @@ $(document).ready(() => {
     }
   };
 
+  var addBonusToPrevScore = function(bonus) {
+    if (bonus == "strike") {
+      console.log("strike");
+    }
+    if (bonus == "spare") {
+      console.log("spare");
+    }
+  };
+
   var symbolOrNumber = function(bowlValue) {
     if (bowlValue === "X") {
+      addBonusToPrevScore("strike");
       return 10;
     } else {
       return parseInt(bowlValue);
     }
   };
 
-  var isStrike = function(bowlValue) {
+  var ifStrikeNextBowlZero = function(bowlValue) {
     if (bowlValue === 10) {
       frameScoreIndex++;
       addSingleScoreToPage(0);
@@ -63,6 +73,9 @@ $(document).ready(() => {
           $(`#${value}`).hide();
         }
       });
+      $(".button")
+        .eq(remainingPins)
+        .val("/");
     }
   };
 
