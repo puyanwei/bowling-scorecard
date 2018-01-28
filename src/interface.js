@@ -19,7 +19,7 @@ $(document).ready(() => {
   });
 
   var updateScore = function(bowlValue) {
-    bowlValue = symbolOrNumber(bowlValue);
+    bowlValue = parseInt(bowlValue);
     scoreCardArray.push(bowlValue);
     hideButtonsIfSumOverTen(bowlValue);
     addSingleScoreToPage(bowlValue);
@@ -38,15 +38,6 @@ $(document).ready(() => {
     }
   };
 
-  var symbolOrNumber = function(bowlValue) {
-    if (bowlValue === "X") {
-      isStrike();
-      return 10;
-    } else {
-      return parseInt(bowlValue);
-    }
-  };
-
   var isSpare = function() {
     var firstBowl = scoreCardArray[frameBowlIndex - 1];
     var secondBowl = scoreCardArray[frameBowlIndex];
@@ -61,6 +52,7 @@ $(document).ready(() => {
 
   var ifStrikeNextBowlZero = function(bowlValue) {
     if (bowlValue === 10) {
+      isStrike();
       frameBowlIndex++;
       addSingleScoreToPage(0);
       scoreCardArray.push(0);
