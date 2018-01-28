@@ -1,12 +1,12 @@
 $(document).ready(() => {
-  var frameScoreIndex = 0;
+  var frameBowlIndex = 0;
   var frameTotalIndex = 0;
   var scoreCardArray = [];
   var allSpans = $("span");
   var totalClass = $(".total");
 
   var bowlsSpan = function() {
-    return allSpans[frameScoreIndex];
+    return allSpans[frameBowlIndex];
   };
 
   var totalSpan = function() {
@@ -25,13 +25,14 @@ $(document).ready(() => {
     addSingleScoreToPage(bowlValue);
     ifStrikeNextBowlZero(bowlValue);
     calculateTotals(bowlValue);
-    frameScoreIndex++;
+    frameBowlIndex++;
   };
 
   var calculateTotals = function(bowlValue) {
     if (hasEvenIndex(scoreCardArray)) {
       var total = sumArray(scoreCardArray);
       addTotalToPage(total);
+      isSpare();
       frameTotalIndex++;
       resetButtons();
     }
@@ -46,13 +47,21 @@ $(document).ready(() => {
     }
   };
 
+  var isSpare = function() {
+    var firstBowl = scoreCardArray[frameBowlIndex - 1];
+    var secondBowl = scoreCardArray[frameBowlIndex];
+    if (firstBowl + secondBowl === 10 && firstBowl !== 0 && secondBowl !== 0) {
+      console.log("its a spare");
+    }
+  };
+
   var isStrike = function() {
     console.log("its a strike");
   };
 
   var ifStrikeNextBowlZero = function(bowlValue) {
     if (bowlValue === 10) {
-      frameScoreIndex++;
+      frameBowlIndex++;
       addSingleScoreToPage(0);
       scoreCardArray.push(0);
     }
