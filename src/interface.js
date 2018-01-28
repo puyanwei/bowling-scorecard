@@ -37,22 +37,17 @@ $(document).ready(() => {
     }
   };
 
-  var addBonusToPrevScore = function(bonus) {
-    if (bonus == "strike") {
-      console.log("strike");
-    }
-    if (bonus == "spare") {
-      console.log("spare");
-    }
-  };
-
   var symbolOrNumber = function(bowlValue) {
     if (bowlValue === "X") {
-      addBonusToPrevScore("strike");
+      isStrike();
       return 10;
     } else {
       return parseInt(bowlValue);
     }
+  };
+
+  var isStrike = function() {
+    console.log("its a strike");
   };
 
   var ifStrikeNextBowlZero = function(bowlValue) {
@@ -73,9 +68,6 @@ $(document).ready(() => {
           $(`#${value}`).hide();
         }
       });
-      $(".button")
-        .eq(remainingPins)
-        .val("/");
     }
   };
 
