@@ -67,10 +67,10 @@ $(document).ready(() => {
 
   var addSpareBonus = function(total) {
     if (spare) {
-      var bonusScore = bowlIndexFromLast(2);
-      var newPrevTotal = getPrevTotal() + bonusScore;
-      addPrevTotalToPage(newPrevTotal);
-      runningTotal = runningTotal + bonusScore;
+      var firstBowlBonus = bowlIndexFromLast(2);
+      var newPrevTotal = getPrevTotal() + firstBowlBonus;
+      editPrevTotalToPage(newPrevTotal);
+      runningTotal += firstBowlBonus;
       spare = false;
     }
   };
@@ -112,7 +112,7 @@ $(document).ready(() => {
     totalSpan().innerText = total;
   };
 
-  var addPrevTotalToPage = function(total) {
+  var editPrevTotalToPage = function(total) {
     prevTotalSpan().innerText = total;
   };
 
