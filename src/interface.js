@@ -28,7 +28,6 @@ $(document).ready(() => {
       addBowlsToTotal();
       addSpareBonus();
       addStrikeBonus();
-      console.log("runningTotal " + runningTotal);
       addTotalToPage(runningTotal);
       isStrike();
       isSpare();
@@ -49,18 +48,17 @@ $(document).ready(() => {
   var isSpare = function() {
     var firstBowl = bowlIndexFromLast(2);
     var secondBowl = bowlIndexFromLast(1);
-
-    console.log(firstBowl, secondBowl);
-
     if (firstBowl + secondBowl === 10 && secondBowl !== 0) {
       spare = true;
-      console.log("spare");
     }
   };
 
   var isStrike = function() {
-    strike = true;
-    console.log("strike");
+    var firstBowl = bowlIndexFromLast(2);
+    var secondBowl = bowlIndexFromLast(1);
+    if (firstBowl === 10) {
+      strike = true;
+    }
   };
 
   var ifStrikeNextBowlZero = function(bowlValue) {
@@ -74,10 +72,6 @@ $(document).ready(() => {
   var addSpareBonus = function(total) {
     if (spare) {
       var firstBowlBonus = bowlIndexFromLast(2);
-      console.log(
-        "prevtotal " + getPrevTotal(),
-        "firstBowlBonus " + firstBowlBonus
-      );
       var newPrevTotal = getPrevTotal() + firstBowlBonus;
       editPrevTotalToPage(newPrevTotal);
       runningTotal += firstBowlBonus;
