@@ -27,7 +27,10 @@ $(document).ready(() => {
     if (hasEvenIndex(scoreCardArray)) {
       addBowlsToTotal();
       addSpareBonus();
+      addStrikeBonus();
+      console.log("runningTotal " + runningTotal);
       addTotalToPage(runningTotal);
+      isStrike();
       isSpare();
       frameTotalIndex++;
       resetButtons();
@@ -44,21 +47,24 @@ $(document).ready(() => {
   };
 
   var isSpare = function() {
-    var firstBowl = scoreCardArray[frameBowlIndex - 1];
-    var secondBowl = scoreCardArray[frameBowlIndex];
+    var firstBowl = bowlIndexFromLast(2);
+    var secondBowl = bowlIndexFromLast(1);
+
+    console.log(firstBowl, secondBowl);
 
     if (firstBowl + secondBowl === 10 && secondBowl !== 0) {
       spare = true;
+      console.log("spare");
     }
   };
 
   var isStrike = function() {
     strike = true;
+    console.log("strike");
   };
 
   var ifStrikeNextBowlZero = function(bowlValue) {
     if (bowlValue === 10 && !hasEvenIndex(scoreCardArray)) {
-      isStrike();
       frameBowlIndex++;
       addSingleScoreToPage(0);
       scoreCardArray.push(0);
@@ -68,10 +74,24 @@ $(document).ready(() => {
   var addSpareBonus = function(total) {
     if (spare) {
       var firstBowlBonus = bowlIndexFromLast(2);
+      console.log(
+        "prevtotal " + getPrevTotal(),
+        "firstBowlBonus " + firstBowlBonus
+      );
       var newPrevTotal = getPrevTotal() + firstBowlBonus;
       editPrevTotalToPage(newPrevTotal);
       runningTotal += firstBowlBonus;
       spare = false;
+    }
+  };
+
+  var addStrikeBonus = function() {
+    if (strike) {
+      currentTotalBonus = bowlIndexFromLast(1) + bowlIndexFromLast(2);
+      var newPrevTotal = getPrevTotal() + currentTotalBonus;
+      editPrevTotalToPage(newPrevTotal);
+      runningTotal = newPrevTotal + currentTotalBonus;
+      strike = false;
     }
   };
 
