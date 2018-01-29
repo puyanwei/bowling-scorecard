@@ -48,6 +48,7 @@ $(document).ready(() => {
   var isSpare = function() {
     var firstBowl = bowlIndexFromLast(2);
     var secondBowl = bowlIndexFromLast(1);
+    console.log(firstBowl, secondBowl);
     if (firstBowl + secondBowl === 10 && secondBowl !== 0) {
       spare = true;
     }
