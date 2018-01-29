@@ -6,18 +6,8 @@ $(document).ready(() => {
   var scoreCardArray = [];
   var spare = false;
   var strike = false;
-
-  var bowlsSpan = function() {
-    return allSpans[frameBowlIndex];
-  };
-
-  var totalSpan = function() {
-    return totalClass[frameTotalIndex];
-  };
-
-  var prevTotalSpan = function() {
-    return totalClass[frameTotalIndex - 1];
-  };
+  var runningTotal = 0;
+  var newPrevTotal;
 
   $(".button").click(function() {
     var bowlValue = $(this).val();
@@ -28,21 +18,30 @@ $(document).ready(() => {
     bowlValue = parseInt(bowlValue);
     scoreCardArray.push(bowlValue);
     hideButtonsIfSumOverTen(bowlValue);
-    addSpareBonus(bowlValue);
     addSingleScoreToPage(bowlValue);
     ifStrikeNextBowlZero(bowlValue);
-    calculateTotals(bowlValue);
+    calculateTotals();
     frameBowlIndex++;
   };
 
-  var calculateTotals = function(bowlValue) {
+  var calculateTotals = function() {
     if (hasEvenIndex(scoreCardArray)) {
-      var total = sumArray(scoreCardArray);
+      // var total = sumArray(scoreCardArray);
+      var total = addBowlsToTotal();
+      // total = addSpareBonus();
       addTotalToPage(total);
       isSpare();
       frameTotalIndex++;
       resetButtons();
     }
+  };
+
+  var addBowlsToTotal = function() {
+    var currentFrameTotal =
+      scoreCardArray[scoreCardArray.length - 1] +
+      scoreCardArray[scoreCardArray.length - 2];
+    runningTotal = currentFrameTotal + runningTotal;
+    return runningTotal;
   };
 
   var isSpare = function() {
@@ -67,16 +66,20 @@ $(document).ready(() => {
     }
   };
 
-  var addSpareBonus = function(bowlValue) {
-    if (spare) {
-      var newPrevTotal =
-        scoreCardArray[scoreCardArray.length - 2] +
-        scoreCardArray[scoreCardArray.length - 3] +
-        bowlValue;
-      addPrevTotalToPage(newPrevTotal);
-      spare = false;
-    }
-  };
+  // var addSpareBonus = function(total) {
+  //   if (spare) {
+  //     var currentFrameTotal =
+  //       scoreCardArray[scoreCardArray.length - 1] +
+  //       scoreCardArray[scoreCardArray.length - 2];
+  //     newPrevTotal =
+  //       scoreCardArray[scoreCardArray.length - 3] +
+  //       scoreCardArray[scoreCardArray.length - 4] +
+  //       scoreCardArray[scoreCardArray.length - 2];
+  //     addPrevTotalToPage(newPrevTotal);
+  //     console.log(newPrevTotal + currentFrameTotal);
+  //     return newPrevTotal + currentFrameTotal;
+  //   }
+  // };
 
   var hideButtonsIfSumOverTen = function(bowlValue) {
     if (bowlValue !== 10) {
@@ -113,5 +116,17 @@ $(document).ready(() => {
 
   var addPrevTotalToPage = function(total) {
     prevTotalSpan().innerText = total;
+  };
+
+  var bowlsSpan = function() {
+    return allSpans[frameBowlIndex];
+  };
+
+  var totalSpan = function() {
+    return totalClass[frameTotalIndex];
+  };
+
+  var prevTotalSpan = function() {
+    return totalClass[frameTotalIndex - 1];
   };
 });
