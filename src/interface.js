@@ -25,9 +25,9 @@ $(document).ready(() => {
 
   var calculateTotals = function() {
     if (hasEvenIndex(scoreCardArray)) {
-      var total = addBowlsToTotal();
-      total = addSpareBonus();
-      addTotalToPage(total);
+      addBowlsToTotal();
+      addSpareBonus();
+      addTotalToPage(runningTotal);
       isSpare();
       frameTotalIndex++;
       resetButtons();
@@ -36,9 +36,7 @@ $(document).ready(() => {
 
   var addBowlsToTotal = function() {
     var currentFrameTotal = bowlIndexFromLast(1) + bowlIndexFromLast(2);
-    console.log(currentFrameTotal);
     runningTotal += currentFrameTotal;
-    return runningTotal;
   };
 
   var bowlIndexFromLast = function(index) {
@@ -69,15 +67,16 @@ $(document).ready(() => {
 
   var addSpareBonus = function(total) {
     if (spare) {
-      var newPrevTotal = scoreCardArray[scoreCardArray.length - 1];
-
-      // var newTotal = (runningTotal +=
-      //   scoreCardArray[scoreCardArray.length - 2]);
+      var newPrevTotal = getPrevTotal() + bowlIndexFromLast(2);
       addPrevTotalToPage(newPrevTotal);
+      // getPrevTotal();
+      // console.log(bowlIndexFromLast(2));
       spare = false;
-      return runningTotal;
     }
-    return total;
+  };
+
+  var getPrevTotal = function() {
+    return parseInt(totalClass[frameTotalIndex - 1].innerText);
   };
 
   var hideButtonsIfSumOverTen = function(bowlValue) {
