@@ -26,13 +26,20 @@ $(document).ready(() => {
   var calculateTotals = function() {
     if (hasEvenIndex(scoreCardArray)) {
       addBowlsToTotal();
-      addSpareBonus();
-      addStrikeBonus();
+      addBonus();
       addTotalToPage(runningTotal);
-      isStrike();
-      isSpare();
+      spareOrStrikeChecker();
       frameTotalIndex++;
       resetButtons();
+    }
+  };
+
+  var addBonus = function() {
+    if (spare) {
+      addSpareBonus();
+    }
+    if (strike) {
+      addStrikeBonus();
     }
   };
 
@@ -45,18 +52,20 @@ $(document).ready(() => {
     return scoreCardArray[scoreCardArray.length - index];
   };
 
-  var isSpare = function() {
+  var spareOrStrikeChecker = function() {
     var firstBowl = bowlIndexFromLast(2);
     var secondBowl = bowlIndexFromLast(1);
-    console.log(firstBowl, secondBowl);
+    isStrike(firstBowl, secondBowl);
+    isSpare(firstBowl, secondBowl);
+  };
+
+  var isSpare = function(firstBowl, secondBowl) {
     if (firstBowl + secondBowl === 10 && secondBowl !== 0) {
       spare = true;
     }
   };
 
-  var isStrike = function() {
-    var firstBowl = bowlIndexFromLast(2);
-    var secondBowl = bowlIndexFromLast(1);
+  var isStrike = function(firstBowl, secondBowl) {
     if (firstBowl === 10) {
       strike = true;
     }
