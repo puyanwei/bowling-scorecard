@@ -67,10 +67,10 @@ $(document).ready(() => {
 
   var addSpareBonus = function(total) {
     if (spare) {
-      var newPrevTotal = getPrevTotal() + bowlIndexFromLast(2);
+      var bonusScore = bowlIndexFromLast(2);
+      var newPrevTotal = getPrevTotal() + bonusScore;
       addPrevTotalToPage(newPrevTotal);
-      // getPrevTotal();
-      // console.log(bowlIndexFromLast(2));
+      runningTotal = runningTotal + bonusScore;
       spare = false;
     }
   };
