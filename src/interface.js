@@ -7,7 +7,6 @@ $(document).ready(() => {
   var spare = false;
   var strike = false;
   var runningTotal = 0;
-  var newPrevTotal;
 
   $(".button").click(function() {
     var bowlValue = $(this).val();
@@ -26,9 +25,8 @@ $(document).ready(() => {
 
   var calculateTotals = function() {
     if (hasEvenIndex(scoreCardArray)) {
-      // var total = sumArray(scoreCardArray);
       var total = addBowlsToTotal();
-      // total = addSpareBonus();
+      total = addSpareBonus();
       addTotalToPage(total);
       isSpare();
       frameTotalIndex++;
@@ -37,11 +35,14 @@ $(document).ready(() => {
   };
 
   var addBowlsToTotal = function() {
-    var currentFrameTotal =
-      scoreCardArray[scoreCardArray.length - 1] +
-      scoreCardArray[scoreCardArray.length - 2];
-    runningTotal = currentFrameTotal + runningTotal;
+    var currentFrameTotal = bowlIndexFromLast(1) + bowlIndexFromLast(2);
+    console.log(currentFrameTotal);
+    runningTotal += currentFrameTotal;
     return runningTotal;
+  };
+
+  var bowlIndexFromLast = function(index) {
+    return scoreCardArray[scoreCardArray.length - index];
   };
 
   var isSpare = function() {
@@ -66,20 +67,18 @@ $(document).ready(() => {
     }
   };
 
-  // var addSpareBonus = function(total) {
-  //   if (spare) {
-  //     var currentFrameTotal =
-  //       scoreCardArray[scoreCardArray.length - 1] +
-  //       scoreCardArray[scoreCardArray.length - 2];
-  //     newPrevTotal =
-  //       scoreCardArray[scoreCardArray.length - 3] +
-  //       scoreCardArray[scoreCardArray.length - 4] +
-  //       scoreCardArray[scoreCardArray.length - 2];
-  //     addPrevTotalToPage(newPrevTotal);
-  //     console.log(newPrevTotal + currentFrameTotal);
-  //     return newPrevTotal + currentFrameTotal;
-  //   }
-  // };
+  var addSpareBonus = function(total) {
+    if (spare) {
+      var newPrevTotal = scoreCardArray[scoreCardArray.length - 1];
+
+      // var newTotal = (runningTotal +=
+      //   scoreCardArray[scoreCardArray.length - 2]);
+      addPrevTotalToPage(newPrevTotal);
+      spare = false;
+      return runningTotal;
+    }
+    return total;
+  };
 
   var hideButtonsIfSumOverTen = function(bowlValue) {
     if (bowlValue !== 10) {
