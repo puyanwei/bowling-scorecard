@@ -8,8 +8,9 @@ $(document).ready(() => {
   var strike = false;
   var runningTotal = 0;
 
-  $(".button").click(function() {
+  $(".button").click(function(event) {
     var bowlValue = $(this).val();
+    event.preventDefault();
     updateScore(bowlValue);
   });
 

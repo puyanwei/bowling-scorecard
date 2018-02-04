@@ -27,4 +27,12 @@ describe("User visits page", function() {
       done();
     });
   });
+
+  describe("button outcomes", function() {
+    it("clicking a button shows it on the scorecard", function(done) {
+      browser.pressButton("1");
+      browser.text("span").should.equal("1");
+      done();
+    });
+  });
 });
