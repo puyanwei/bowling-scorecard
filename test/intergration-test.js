@@ -30,7 +30,7 @@ describe("User visits page", function() {
 
   describe("submits form", function() {
     it("should be successful", function(done) {
-      return browser.pressButton("1", function() {
+      browser.pressButton("1", function() {
         browser.text("#first").should.equal("1");
         done();
       });
