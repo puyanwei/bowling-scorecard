@@ -28,10 +28,9 @@ describe("User visits page", function() {
     });
   });
 
-  describe("button outcomes", function() {
-    it("clicking a button shows it on the scorecard", function(done) {
-      // browser.assert.input('form input[id="0"]', "0");
-      browser.pressButton('form input[id="0"]', function() {
+  describe("submits form", function() {
+    it("should be successful", function(done) {
+      return browser.pressButton("1", function() {
         browser.text("#first").should.equal("1");
         done();
       });
