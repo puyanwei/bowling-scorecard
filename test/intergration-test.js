@@ -30,8 +30,9 @@ describe("User visits page", function() {
 
   describe("button outcomes", function() {
     it("clicking a button shows it on the scorecard", function(done) {
-      browser.pressButton("1");
-      browser.text("span").should.equal("1");
+      browser.assert.input("form input[name=text]", "Head Eater");
+      // browser.pressButton("1", done);
+      // browser.text("#first").should.equal("1");
       done();
     });
   });
