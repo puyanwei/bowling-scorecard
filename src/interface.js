@@ -8,7 +8,7 @@ $(document).ready(() => {
   var strike = false;
   var runningTotal = 0;
 
-  $("input").click(function() {
+  $(".button").click(function() {
     var bowlValue = $(this).val();
     updateScore(bowlValue);
   });
@@ -29,9 +29,14 @@ $(document).ready(() => {
       addBonus();
       addTotalToPage(runningTotal);
       spareOrStrikeChecker();
+      IsTenthFrame();
       frameTotalIndex++;
       resetButtons();
     }
+  };
+
+  var IsTenthFrame = function() {
+    console.log(scoreCardArray.length === 20);
   };
 
   var addBonus = function() {

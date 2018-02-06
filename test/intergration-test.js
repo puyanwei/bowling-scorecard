@@ -28,9 +28,10 @@ describe("User visits page", function() {
     });
   });
 
+  // Test not outputting number
   describe("submits form", function() {
     it("should be successful", function(done) {
-      browser.pressButton("1", function() {
+      return browser.pressButton("1", function() {
         browser.text("#first").should.equal("1");
         done();
       });
