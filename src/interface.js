@@ -28,11 +28,12 @@ $(document).ready(() => {
     if (hasEvenIndex(scoreCardArray)) {
       addBowlsToTotal();
       addBonus();
-      addTotalToPage(runningTotal);
+      console.log(runningTotal);
+      addTotalToPage(runningTotal, 0);
       spareOrStrikeChecker();
       IsTenthFrame();
-      frameTotalIndex++;
       resetButtons();
+      frameTotalIndex++;
     }
   };
 
@@ -43,9 +44,7 @@ $(document).ready(() => {
   };
 
   var thirdBowl = function() {
-    var firstBowl = bowlIndexFromLast(2);
-    var secondBowl = bowlIndexFromLast(1);
-    if (firstBowl + secondBowl !== 10) {
+    if (firstBowl() + secondBowl() !== 10) {
       frameBowlIndex++;
       addSingleScoreToPage(0);
       scoreCardArray.push(0);
@@ -53,46 +52,32 @@ $(document).ready(() => {
   };
 
   var addBonus = function() {
-    currentTotalBonus = bowlIndexFromLast(1) + bowlIndexFromLast(2);
     if (spare) {
       addSpareBonus();
     }
     if (strike) {
-      addStrikeBonus(currentTotalBonus);
-      if (doubleStrike) {
-        addDoubleStrikeBonus(currentTotalBonus);
-      }
+      addStrikeBonus(currentTotal());
     }
   };
 
   var addBowlsToTotal = function() {
-    var currentFrameTotal = bowlIndexFromLast(1) + bowlIndexFromLast(2);
-    runningTotal += currentFrameTotal;
-  };
-
-  var bowlIndexFromLast = function(index) {
-    return scoreCardArray[scoreCardArray.length - index];
+    runningTotal += currentTotal();
   };
 
   var spareOrStrikeChecker = function() {
-    var firstBowl = bowlIndexFromLast(2);
-    var secondBowl = bowlIndexFromLast(1);
-    isStrike(firstBowl, secondBowl);
-    isSpare(firstBowl, secondBowl);
+    isStrike();
+    isSpare();
   };
 
-  var isSpare = function(firstBowl, secondBowl) {
-    if (firstBowl + secondBowl === 10 && secondBowl !== 0) {
+  var isSpare = function() {
+    if (currentTotal() === 10 && secondBowl() !== 0) {
       spare = true;
     }
   };
 
-  var isStrike = function(firstBowl, secondBowl) {
-    if (firstBowl === 10) {
+  var isStrike = function() {
+    if (firstBowl() === 10) {
       strike = true;
-      if (bowlIndexFromLast(4) === 10) {
-        doubleStrike = true;
-      }
     }
   };
 
@@ -108,37 +93,28 @@ $(document).ready(() => {
     scoreCardArray.push(0);
   };
 
-  var addSpareBonus = function(total) {
+  var addSpareBonus = function() {
     if (spare) {
-      var firstBowlBonus = bowlIndexFromLast(2);
-      var onePrevTotal = getPrevTotal(1) + firstBowlBonus;
-      editPrevTotalToPage(onePrevTotal);
-      runningTotal += firstBowlBonus;
+      var newPrevTotal = getNewPrevTotal(1) + firstBowl();
+      runningTotal = newPrevTotal + currentTotal();
+      addTotalToPage(newPrevTotal, 1);
       spare = false;
     }
   };
 
-  var addStrikeBonus = function(currentTotalBonus) {
-    if (strike) {
-      var onePrevTotal = getPrevTotal(1) + currentTotalBonus;
-      editPrevTotalToPage(onePrevTotal, 1);
-      runningTotal = onePrevTotal + currentTotalBonus;
-      strike = false;
-    }
+  var addStrikeBonus = function() {
+    // var currentFirstBowl = bowlIndexFromLast(2);
+    // if (strike) {
+    //   var newPrevTotal = editPrevFrameTotal();
+    //   addTotalToPage(newPrevTotal, 1);
+    //   runningTotal = newPrevTotal + currentTotal();
+    //   if (currentFirstBowl !== 10) {
+    //     strike = false;
+    //   }
+    // }
   };
 
-  var addDoubleStrikeBonus = function(currentTotalBonus) {
-    if (doubleStrike) {
-      var twoPrevTotal = getPrevTotal(2) + currentTotalBonus;
-      editPrevTotalToPage(twoPrevTotal, 2);
-      // var onePrevTotal = getPrevTotal(1) + currentTotalBonus;
-      // editPrevTotalToPage(newPrevTotal, 1);
-      // runningTotal = onePrevTotal + currentTotalBonus;
-      doubleStrike = false;
-    }
-  };
-
-  var getPrevTotal = function(prevNumber) {
+  var getNewPrevTotal = function(prevNumber) {
     return parseInt(totalClass[frameTotalIndex - prevNumber].innerText);
   };
 
@@ -163,31 +139,45 @@ $(document).ready(() => {
     return array.length % 2 == 0;
   };
 
-  var sumArray = function(array) {
-    return array.reduce((a, b) => a + b, 0);
-  };
-
   var addSingleScoreToPage = function(bowlValue) {
     bowlsSpan().innerText = bowlValue;
   };
 
-  var addTotalToPage = function(total) {
-    totalSpan().innerText = total;
-  };
-
-  var editPrevTotalToPage = function(total, prevNumber) {
-    prevTotalSpan(prevNumber).innerText = total;
+  var addTotalToPage = function(total, indexFromEnd) {
+    totalSpan(indexFromEnd).innerText = total;
   };
 
   var bowlsSpan = function() {
     return allSpans[frameBowlIndex];
   };
 
-  var totalSpan = function() {
-    return totalClass[frameTotalIndex];
+  var totalSpan = function(indexFromEnd) {
+    return totalClass[frameTotalIndex - indexFromEnd];
   };
 
-  var prevTotalSpan = function(prevNumber) {
-    return totalClass[frameTotalIndex - prevNumber];
+  var firstBowl = function() {
+    return bowlIndexFromLast(2);
+  };
+  var secondBowl = function() {
+    return bowlIndexFromLast(1);
+  };
+
+  var prevFirstBowl = function() {
+    return bowlIndexFromLast(4);
+  };
+  var prevSecondBowl = function() {
+    return bowlIndexFromLast(3);
+  };
+
+  var bowlIndexFromLast = function(index) {
+    return scoreCardArray[scoreCardArray.length - index];
+  };
+
+  var currentTotal = function() {
+    return firstBowl() + secondBowl();
+  };
+
+  var prevTotal = function() {
+    return totalClass();
   };
 });
