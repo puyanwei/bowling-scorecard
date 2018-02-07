@@ -44,12 +44,11 @@ $(document).ready(() => {
   var thirdBowl = function() {
     var firstBowl = bowlIndexFromLast(2);
     var secondBowl = bowlIndexFromLast(1);
-    if (firstBowl + secondBowl === 10) {
-      console.log("you get a third bowl");
+    if (firstBowl + secondBowl !== 10) {
+      frameBowlIndex++;
+      addSingleScoreToPage(0);
+      scoreCardArray.push(0);
     }
-    frameBowlIndex++;
-    addSingleScoreToPage(0);
-    scoreCardArray.push(0);
   };
 
   var addBonus = function() {
@@ -91,12 +90,12 @@ $(document).ready(() => {
 
   var ifStrikeNextBowlZero = function(bowlValue) {
     if (bowlValue === 10 && !hasEvenIndex(scoreCardArray)) {
+      frameBowlIndex++;
       nextBowlZero();
     }
   };
 
   var nextBowlZero = function() {
-    frameBowlIndex++;
     addSingleScoreToPage(0);
     scoreCardArray.push(0);
   };
