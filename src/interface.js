@@ -31,16 +31,16 @@ $(document).ready(() => {
       addBonus();
       addTotalToPage(runningTotal);
       spareOrStrikeChecker();
-      if (IsTenthFrame()) {
-        thirdBowl();
-      }
+      IsTenthFrame();
       frameTotalIndex++;
       resetButtons();
     }
   };
 
   var IsTenthFrame = function() {
-    return scoreCardArray.length === 20;
+    if (scoreCardArray.length === 20) {
+      thirdBowl();
+    }
   };
 
   var thirdBowl = function() {
