@@ -22,7 +22,6 @@ $(document).ready(() => {
     ifStrikeNextBowlZero(bowlValue);
     calculateTotals();
     frameBowlIndex++;
-    console.log(doubleStrike);
   };
 
   var calculateTotals = function() {
@@ -54,13 +53,14 @@ $(document).ready(() => {
   };
 
   var addBonus = function() {
+    currentTotalBonus = bowlIndexFromLast(1) + bowlIndexFromLast(2);
     if (spare) {
       addSpareBonus();
     }
     if (strike) {
-      addStrikeBonus();
+      addStrikeBonus(currentTotalBonus);
       if (doubleStrike) {
-        addDoubleStrikeBonus();
+        addDoubleStrikeBonus(currentTotalBonus);
       }
     }
   };
@@ -111,35 +111,35 @@ $(document).ready(() => {
   var addSpareBonus = function(total) {
     if (spare) {
       var firstBowlBonus = bowlIndexFromLast(2);
-      var newPrevTotal = getPrevTotal() + firstBowlBonus;
-      editPrevTotalToPage(newPrevTotal);
+      var onePrevTotal = getPrevTotal(1) + firstBowlBonus;
+      editPrevTotalToPage(onePrevTotal);
       runningTotal += firstBowlBonus;
       spare = false;
     }
   };
 
-  var addStrikeBonus = function() {
+  var addStrikeBonus = function(currentTotalBonus) {
     if (strike) {
-      currentTotalBonus = bowlIndexFromLast(1) + bowlIndexFromLast(2);
-      var newPrevTotal = getPrevTotal() + currentTotalBonus;
-      editPrevTotalToPage(newPrevTotal);
-      runningTotal = newPrevTotal + currentTotalBonus;
+      var onePrevTotal = getPrevTotal(1) + currentTotalBonus;
+      editPrevTotalToPage(onePrevTotal, 1);
+      runningTotal = onePrevTotal + currentTotalBonus;
       strike = false;
     }
   };
 
-  var addDoubleStrikeBonus = function() {
+  var addDoubleStrikeBonus = function(currentTotalBonus) {
     if (doubleStrike) {
-      currentTotalBonus = bowlIndexFromLast(1) + bowlIndexFromLast(2);
-      var newPrevTotal = getPrevTotal() + currentTotalBonus;
-      editPrevTotalToPage(newPrevTotal);
-      runningTotal = newPrevTotal + currentTotalBonus;
-      strike = false;
+      var twoPrevTotal = getPrevTotal(2) + currentTotalBonus;
+      editPrevTotalToPage(twoPrevTotal, 2);
+      // var onePrevTotal = getPrevTotal(1) + currentTotalBonus;
+      // editPrevTotalToPage(newPrevTotal, 1);
+      // runningTotal = onePrevTotal + currentTotalBonus;
+      doubleStrike = false;
     }
   };
 
-  var getPrevTotal = function() {
-    return parseInt(totalClass[frameTotalIndex - 1].innerText);
+  var getPrevTotal = function(prevNumber) {
+    return parseInt(totalClass[frameTotalIndex - prevNumber].innerText);
   };
 
   var hideButtonsIfSumOverTen = function(bowlValue) {
@@ -175,8 +175,8 @@ $(document).ready(() => {
     totalSpan().innerText = total;
   };
 
-  var editPrevTotalToPage = function(total) {
-    prevTotalSpan().innerText = total;
+  var editPrevTotalToPage = function(total, prevNumber) {
+    prevTotalSpan(prevNumber).innerText = total;
   };
 
   var bowlsSpan = function() {
@@ -187,7 +187,7 @@ $(document).ready(() => {
     return totalClass[frameTotalIndex];
   };
 
-  var prevTotalSpan = function() {
-    return totalClass[frameTotalIndex - 1];
+  var prevTotalSpan = function(prevNumber) {
+    return totalClass[frameTotalIndex - prevNumber];
   };
 });
