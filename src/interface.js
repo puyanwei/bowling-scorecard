@@ -29,14 +29,27 @@ $(document).ready(() => {
       addBonus();
       addTotalToPage(runningTotal);
       spareOrStrikeChecker();
-      IsTenthFrame();
+      if (IsTenthFrame()) {
+        thirdBowl();
+      }
       frameTotalIndex++;
       resetButtons();
     }
   };
 
   var IsTenthFrame = function() {
-    console.log(scoreCardArray.length === 20);
+    return scoreCardArray.length === 20;
+  };
+
+  var thirdBowl = function() {
+    var firstBowl = bowlIndexFromLast(2);
+    var secondBowl = bowlIndexFromLast(1);
+    if (firstBowl + secondBowl === 10) {
+      console.log("you get a third bowl");
+    }
+    frameBowlIndex++;
+    addSingleScoreToPage(0);
+    scoreCardArray.push(0);
   };
 
   var addBonus = function() {
@@ -78,10 +91,14 @@ $(document).ready(() => {
 
   var ifStrikeNextBowlZero = function(bowlValue) {
     if (bowlValue === 10 && !hasEvenIndex(scoreCardArray)) {
-      frameBowlIndex++;
-      addSingleScoreToPage(0);
-      scoreCardArray.push(0);
+      nextBowlZero();
     }
+  };
+
+  var nextBowlZero = function() {
+    frameBowlIndex++;
+    addSingleScoreToPage(0);
+    scoreCardArray.push(0);
   };
 
   var addSpareBonus = function(total) {
