@@ -6,6 +6,7 @@ $(document).ready(() => {
   var scoreCardArray = [];
   var spare = false;
   var strike = false;
+  var doubleStrike = false;
   var runningTotal = 0;
 
   $(".button").click(function() {
@@ -21,6 +22,7 @@ $(document).ready(() => {
     ifStrikeNextBowlZero(bowlValue);
     calculateTotals();
     frameBowlIndex++;
+    console.log(doubleStrike);
   };
 
   var calculateTotals = function() {
@@ -57,6 +59,9 @@ $(document).ready(() => {
     }
     if (strike) {
       addStrikeBonus();
+      if (doubleStrike) {
+        addDoubleStrikeBonus();
+      }
     }
   };
 
@@ -85,6 +90,9 @@ $(document).ready(() => {
   var isStrike = function(firstBowl, secondBowl) {
     if (firstBowl === 10) {
       strike = true;
+      if (bowlIndexFromLast(4) === 10) {
+        doubleStrike = true;
+      }
     }
   };
 
@@ -112,6 +120,16 @@ $(document).ready(() => {
 
   var addStrikeBonus = function() {
     if (strike) {
+      currentTotalBonus = bowlIndexFromLast(1) + bowlIndexFromLast(2);
+      var newPrevTotal = getPrevTotal() + currentTotalBonus;
+      editPrevTotalToPage(newPrevTotal);
+      runningTotal = newPrevTotal + currentTotalBonus;
+      strike = false;
+    }
+  };
+
+  var addDoubleStrikeBonus = function() {
+    if (doubleStrike) {
       currentTotalBonus = bowlIndexFromLast(1) + bowlIndexFromLast(2);
       var newPrevTotal = getPrevTotal() + currentTotalBonus;
       editPrevTotalToPage(newPrevTotal);
