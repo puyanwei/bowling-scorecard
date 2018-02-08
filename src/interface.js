@@ -55,7 +55,10 @@ $(document).ready(() => {
       addSpareBonus();
     }
     if (strike) {
-      addStrikeBonus(currentTotal());
+      addStrikeBonus();
+    }
+    if (doubleStrike) {
+      addDoubleStrikeBonus();
     }
   };
 
@@ -66,6 +69,7 @@ $(document).ready(() => {
   var spareOrStrikeChecker = function() {
     isStrike();
     isSpare();
+    isDoubleStrike();
   };
 
   var isSpare = function() {
@@ -77,6 +81,12 @@ $(document).ready(() => {
   var isStrike = function() {
     if (firstBowl() === 10) {
       strike = true;
+    }
+  };
+
+  var isDoubleStrike = function() {
+    if (firstBowl() === 10 && prevFirstBowl() === 10) {
+      doubleStrike = true;
     }
   };
 
@@ -103,13 +113,21 @@ $(document).ready(() => {
 
   var addStrikeBonus = function() {
     if (strike) {
+      var newPrevTotal = getNewPrevTotal(1) + currentTotal();
+      runningTotal = newPrevTotal + currentTotal();
+      addTotalToPage(newPrevTotal, 1);
       if (firstBowl() !== 10) {
-        var newPrevTotal = getNewPrevTotal(1) + currentTotal();
-        runningTotal = newPrevTotal + currentTotal();
-        addTotalToPage(newPrevTotal, 1);
         strike = false;
       }
     }
+  };
+
+  var addDoubleStrikeBonus = function() {
+    var newPrevTwoTotal = getNewPrevTotal(2) + firstBowl();
+    var newPrevTotal = getNewPrevTotal(1) + firstBowl();
+    runningTotal = newPrevTotal + currentTotal();
+    addTotalToPage(newPrevTwoTotal, 2);
+    addTotalToPage(newPrevTotal, 1);
   };
 
   var getNewPrevTotal = function(prevNumber) {
