@@ -102,15 +102,14 @@ $(document).ready(() => {
   };
 
   var addStrikeBonus = function() {
-    // var currentFirstBowl = bowlIndexFromLast(2);
-    // if (strike) {
-    //   var newPrevTotal = editPrevFrameTotal();
-    //   addTotalToPage(newPrevTotal, 1);
-    //   runningTotal = newPrevTotal + currentTotal();
-    //   if (currentFirstBowl !== 10) {
-    //     strike = false;
-    //   }
-    // }
+    if (strike) {
+      if (firstBowl() !== 10) {
+        var newPrevTotal = getNewPrevTotal(1) + currentTotal();
+        runningTotal = newPrevTotal + currentTotal();
+        addTotalToPage(newPrevTotal, 1);
+        strike = false;
+      }
+    }
   };
 
   var getNewPrevTotal = function(prevNumber) {
