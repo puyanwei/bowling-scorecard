@@ -27,8 +27,7 @@ $(document).ready(() => {
   var calculateTotals = function() {
     if (hasEvenIndex(scoreCardArray)) {
       addBowlsToTotal();
-      addBonus();
-      console.log(runningTotal);
+      addBonusToTotals();
       addTotalToPage(runningTotal, 0);
       spareOrStrikeChecker();
       IsTenthFrame();
@@ -51,7 +50,7 @@ $(document).ready(() => {
     }
   };
 
-  var addBonus = function() {
+  var addBonusToTotals = function() {
     if (spare) {
       addSpareBonus();
     }
@@ -175,9 +174,5 @@ $(document).ready(() => {
 
   var currentTotal = function() {
     return firstBowl() + secondBowl();
-  };
-
-  var prevTotal = function() {
-    return totalClass();
   };
 });
