@@ -30,23 +30,21 @@ $(document).ready(() => {
       addBonusToTotals();
       addTotalToPage(runningTotal, 0);
       spareOrStrikeChecker();
-      IsTenthFrame();
+      tenthFrame();
       resetButtons();
       frameTotalIndex++;
     }
   };
 
-  var IsTenthFrame = function() {
-    if (scoreCardArray.length === 20) {
-      thirdBowl();
-    }
+  var isTenthFrame = function() {
+    return scoreCardArray.length === 18;
   };
 
-  var thirdBowl = function() {
-    if (firstBowl() + secondBowl() !== 10) {
-      frameBowlIndex++;
-      addSingleScoreToPage(0);
-      scoreCardArray.push(0);
+  var tenthFrame = function() {
+    if (isTenthFrame()) {
+      if (firstBowl() + secondBowl() !== 10) {
+        frameBowlIndex++;
+      }
     }
   };
 
@@ -91,7 +89,11 @@ $(document).ready(() => {
   };
 
   var ifStrikeNextBowlZero = function(bowlValue) {
-    if (bowlValue === 10 && !hasEvenIndex(scoreCardArray)) {
+    if (
+      bowlValue === 10 &&
+      !hasEvenIndex(scoreCardArray) &&
+      scoreCardArray.length < 19
+    ) {
       frameBowlIndex++;
       nextBowlZero();
     }
