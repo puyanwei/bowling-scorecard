@@ -10,22 +10,20 @@ $(document).ready(() => {
   var runningTotal = 0;
 
   $(".button").click(function() {
-    console.log(frameBowlIndex);
     var bowlValue = $(this).val();
-    updateScore(bowlValue);
+    updateBowls(bowlValue);
   });
 
-  var updateScore = function(bowlValue) {
+  var updateBowls = function(bowlValue) {
     bowlValue = parseInt(bowlValue);
     scoreCardArray.push(bowlValue);
     hideButtonsIfSumOverTen(bowlValue);
     addSingleScoreToPage(bowlValue);
-    ifStrikeNextBowlZero(bowlValue);
-    calculateTotals();
+    updateTotals();
     frameBowlIndex++;
   };
 
-  var calculateTotals = function() {
+  var updateTotals = function() {
     if (hasEvenIndex(scoreCardArray)) {
       addBowlsToTotal();
       addBonusToTotals();
@@ -44,6 +42,9 @@ $(document).ready(() => {
   var tenthFrame = function() {
     if (isTenthFrame()) {
       if (firstBowl() + secondBowl() === 10) {
+        frameBowlIndex++;
+      }
+      if (firstBowl() === 10) {
         frameBowlIndex++;
       }
       frameBowlIndex++;
@@ -158,6 +159,7 @@ $(document).ready(() => {
 
   var addSingleScoreToPage = function(bowlValue) {
     bowlsSpan().innerText = bowlValue;
+    ifStrikeNextBowlZero(bowlValue);
   };
 
   var addTotalToPage = function(total, indexFromEnd) {
