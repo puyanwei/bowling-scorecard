@@ -37,7 +37,7 @@ $(document).ready(() => {
   };
 
   var isTenthFrame = function() {
-    return scoreCardArray.length === 18;
+    return scoreCardArray.length > 18;
   };
 
   var tenthFrame = function() {
@@ -45,6 +45,8 @@ $(document).ready(() => {
       if (firstBowl() + secondBowl() !== 10) {
         frameBowlIndex++;
       }
+      nextBowlZero();
+      frameBowlIndex++;
     }
   };
 
