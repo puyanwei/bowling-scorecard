@@ -10,6 +10,7 @@ $(document).ready(() => {
   var runningTotal = 0;
 
   $(".button").click(function() {
+    console.log(frameBowlIndex);
     var bowlValue = $(this).val();
     updateScore(bowlValue);
   });
@@ -37,16 +38,16 @@ $(document).ready(() => {
   };
 
   var isTenthFrame = function() {
-    return scoreCardArray.length > 18;
+    return frameBowlIndex > 18;
   };
 
   var tenthFrame = function() {
     if (isTenthFrame()) {
-      if (firstBowl() + secondBowl() !== 10) {
+      if (firstBowl() + secondBowl() === 10) {
         frameBowlIndex++;
       }
-      nextBowlZero();
       frameBowlIndex++;
+      nextBowlZero();
     }
   };
 
@@ -91,11 +92,7 @@ $(document).ready(() => {
   };
 
   var ifStrikeNextBowlZero = function(bowlValue) {
-    if (
-      bowlValue === 10 &&
-      !hasEvenIndex(scoreCardArray) &&
-      scoreCardArray.length < 19
-    ) {
+    if (bowlValue === 10 && !hasEvenIndex(scoreCardArray) && !tenthFrame()) {
       frameBowlIndex++;
       nextBowlZero();
     }
@@ -195,5 +192,11 @@ $(document).ready(() => {
 
   var currentTotal = function() {
     return firstBowl() + secondBowl();
+  };
+
+  var gameOver = function() {
+    if (scoreCardArray.length > 20) {
+      $(".button").hide();
+    }
   };
 });
