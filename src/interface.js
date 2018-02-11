@@ -11,8 +11,12 @@ $(document).ready(() => {
 
   $(".button").click(function() {
     var bowlValue = $(this).val();
-    updateBowls(bowlValue);
-    updateTotals();
+    if (isTenthFrame()) {
+      finalScore(bowlValue);
+    } else {
+      updateBowls(bowlValue);
+      updateTotals();
+    }
   });
 
   var updateBowls = function(bowlValue) {
@@ -29,7 +33,6 @@ $(document).ready(() => {
       addBonusToTotals();
       addTotalToPage(runningTotal, 0);
       spareOrStrikeChecker();
-      tenthFrame();
       resetButtons();
       frameTotalIndex++;
     }
@@ -39,13 +42,11 @@ $(document).ready(() => {
     return frameBowlIndex > 18;
   };
 
-  var tenthFrame = function() {
+  var finalScore = function(bowlValue) {
     if (isTenthFrame()) {
-      if (firstBowl() + secondBowl() === 10) {
-      }
-      if (firstBowl() === 10) {
-      }
-      nextBowlZero();
+      updateBowls(bowlValue);
+      console.log(8787);
+      $(".button").hide();
     }
   };
 
@@ -90,7 +91,7 @@ $(document).ready(() => {
   };
 
   var ifStrikeNextBowlZero = function(bowlValue) {
-    if (bowlValue === 10 && isEven(frameBowlIndex) && !tenthFrame()) {
+    if (bowlValue === 10 && isEven(frameBowlIndex) && !isTenthFrame()) {
       nextBowlZero();
     }
   };
