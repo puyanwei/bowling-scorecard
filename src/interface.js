@@ -2,6 +2,7 @@ $(document).ready(() => {
   var allSpans = $("span");
   var totalClass = $(".total");
   var frameTotalIndex = 0;
+  var frameBowlIndex = 0;
   var scoreCardArray = [];
   var spare = false;
   var strike = false;
@@ -11,6 +12,7 @@ $(document).ready(() => {
   $(".button").click(function() {
     var bowlValue = $(this).val();
     updateBowls(bowlValue);
+    updateTotals();
   });
 
   var updateBowls = function(bowlValue) {
@@ -18,23 +20,23 @@ $(document).ready(() => {
     scoreCardArray.push(bowlValue);
     hideButtonsIfSumOverTen(bowlValue);
     addSingleScoreToPage(bowlValue);
-    if (isEven(frameBowlIndex())) {
-      updateTotals();
-    }
+    frameBowlIndex++;
   };
 
   var updateTotals = function() {
-    addBowlsToTotal();
-    addBonusToTotals();
-    addTotalToPage(runningTotal, 0);
-    spareOrStrikeChecker();
-    tenthFrame();
-    resetButtons();
-    frameTotalIndex++;
+    if (isEven(frameBowlIndex)) {
+      addBowlsToTotal();
+      addBonusToTotals();
+      addTotalToPage(runningTotal, 0);
+      spareOrStrikeChecker();
+      tenthFrame();
+      resetButtons();
+      frameTotalIndex++;
+    }
   };
 
   var isTenthFrame = function() {
-    return frameBowlIndex() > 18;
+    return frameBowlIndex > 18;
   };
 
   var tenthFrame = function() {
@@ -88,12 +90,13 @@ $(document).ready(() => {
   };
 
   var ifStrikeNextBowlZero = function(bowlValue) {
-    if (bowlValue === 10 && !hasEvenIndex(scoreCardArray) && !tenthFrame()) {
+    if (bowlValue === 10 && isEven(frameBowlIndex) && !tenthFrame()) {
       nextBowlZero();
     }
   };
 
   var nextBowlZero = function() {
+    frameBowlIndex++;
     addSingleScoreToPage(0);
     scoreCardArray.push(0);
   };
@@ -161,7 +164,7 @@ $(document).ready(() => {
   };
 
   var bowlsSpan = function() {
-    return allSpans[frameBowlIndex() - 1];
+    return allSpans[frameBowlIndex];
   };
 
   var totalSpan = function(indexFromEnd) {
@@ -188,10 +191,6 @@ $(document).ready(() => {
 
   var currentTotal = function() {
     return firstBowl() + secondBowl();
-  };
-
-  var frameBowlIndex = function() {
-    return scoreCardArray.length;
   };
 
   var gameOver = function() {
