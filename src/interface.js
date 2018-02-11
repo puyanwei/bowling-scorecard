@@ -39,15 +39,24 @@ $(document).ready(() => {
   };
 
   var isTenthFrame = function() {
-    return frameBowlIndex > 18;
+    return frameBowlIndex > 17;
   };
 
   var finalScore = function(bowlValue) {
     if (isTenthFrame()) {
       updateBowls(bowlValue);
-      console.log(8787);
-      $(".button").hide();
+      console.log(
+        firstBowlFrameTen(),
+        secondBowlFrameTen(),
+        thirdBowlFrameTen()
+      );
+      // $(".button").hide();
     }
+
+    // outcomes -
+    // first is strike, get 2 more bowls
+    // first and second spare it get another bowl
+    // two strikes get another bowl
   };
 
   var addBonusToTotals = function() {
@@ -170,6 +179,18 @@ $(document).ready(() => {
 
   var totalSpan = function(indexFromEnd) {
     return totalClass[frameTotalIndex - indexFromEnd];
+  };
+
+  var firstBowlFrameTen = function() {
+    return scoreCardArray[18];
+  };
+
+  var secondBowlFrameTen = function() {
+    return scoreCardArray[19];
+  };
+
+  var thirdBowlFrameTen = function() {
+    return scoreCardArray[20];
   };
 
   var firstBowl = function() {
