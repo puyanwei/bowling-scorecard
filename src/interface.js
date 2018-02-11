@@ -24,6 +24,7 @@ $(document).ready(() => {
     scoreCardArray.push(bowlValue);
     hideButtonsIfSumOverTen(bowlValue);
     addSingleScoreToPage(bowlValue);
+    ifStrikeNextBowlZero(bowlValue);
     frameBowlIndex++;
   };
 
@@ -63,6 +64,8 @@ $(document).ready(() => {
         secondBowlFrameTen() !== undefined
       ) {
         console.log("don't get a third strike");
+        addSingleScoreToPage(0);
+        scoreCardArray.push(0);
       }
 
       // $(".button").hide();
@@ -181,7 +184,6 @@ $(document).ready(() => {
 
   var addSingleScoreToPage = function(bowlValue) {
     bowlsSpan().innerText = bowlValue;
-    ifStrikeNextBowlZero(bowlValue);
   };
 
   var addTotalToPage = function(total, indexFromEnd) {
