@@ -45,11 +45,26 @@ $(document).ready(() => {
   var finalScore = function(bowlValue) {
     if (isTenthFrame()) {
       updateBowls(bowlValue);
-      console.log(
-        firstBowlFrameTen(),
-        secondBowlFrameTen(),
-        thirdBowlFrameTen()
-      );
+      if (firstBowlFrameTen() === 10) {
+        console.log("strike first bowl, gets two more bowls");
+      }
+      if (
+        firstBowlFrameTen() + secondBowlFrameTen() === 10 &&
+        firstBowlFrameTen() !== 10
+      ) {
+        console.log("spare, gets one more bowl");
+      }
+      if (firstBowlFrameTen() + secondBowlFrameTen() === 20) {
+        console.log("two strikes, one more bowl");
+      }
+      if (
+        firstBowlFrameTen() + secondBowlFrameTen() !== 10 &&
+        firstBowlFrameTen() !== 10 &&
+        secondBowlFrameTen() !== undefined
+      ) {
+        console.log("don't get a third strike");
+      }
+
       // $(".button").hide();
     }
 
