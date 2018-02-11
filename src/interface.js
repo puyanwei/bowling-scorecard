@@ -67,8 +67,10 @@ $(document).ready(() => {
         addSingleScoreToPage(0);
         scoreCardArray.push(0);
       }
-
-      // $(".button").hide();
+      console.log(frameBowlIndex);
+      if (frameBowlIndex > 20) {
+        $(".button").hide();
+      }
     }
 
     // outcomes -
