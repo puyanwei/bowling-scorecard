@@ -1,7 +1,6 @@
 $(document).ready(() => {
   var allSpans = $("span");
   var totalClass = $(".total");
-  var frameBowlIndex = 0;
   var frameTotalIndex = 0;
   var scoreCardArray = [];
   var spare = false;
@@ -19,35 +18,31 @@ $(document).ready(() => {
     scoreCardArray.push(bowlValue);
     hideButtonsIfSumOverTen(bowlValue);
     addSingleScoreToPage(bowlValue);
-    updateTotals();
-    frameBowlIndex++;
-  };
-
-  var updateTotals = function() {
-    if (hasEvenIndex(scoreCardArray)) {
-      addBowlsToTotal();
-      addBonusToTotals();
-      addTotalToPage(runningTotal, 0);
-      spareOrStrikeChecker();
-      tenthFrame();
-      resetButtons();
-      frameTotalIndex++;
+    if (isEven(frameBowlIndex())) {
+      updateTotals();
     }
   };
 
+  var updateTotals = function() {
+    addBowlsToTotal();
+    addBonusToTotals();
+    addTotalToPage(runningTotal, 0);
+    spareOrStrikeChecker();
+    tenthFrame();
+    resetButtons();
+    frameTotalIndex++;
+  };
+
   var isTenthFrame = function() {
-    return frameBowlIndex > 18;
+    return frameBowlIndex() > 18;
   };
 
   var tenthFrame = function() {
     if (isTenthFrame()) {
       if (firstBowl() + secondBowl() === 10) {
-        frameBowlIndex++;
       }
       if (firstBowl() === 10) {
-        frameBowlIndex++;
       }
-      frameBowlIndex++;
       nextBowlZero();
     }
   };
@@ -94,7 +89,6 @@ $(document).ready(() => {
 
   var ifStrikeNextBowlZero = function(bowlValue) {
     if (bowlValue === 10 && !hasEvenIndex(scoreCardArray) && !tenthFrame()) {
-      frameBowlIndex++;
       nextBowlZero();
     }
   };
@@ -153,8 +147,8 @@ $(document).ready(() => {
     $(".button").show();
   };
 
-  var hasEvenIndex = function(array) {
-    return array.length % 2 == 0;
+  var isEven = function(number) {
+    return number % 2 == 0;
   };
 
   var addSingleScoreToPage = function(bowlValue) {
@@ -167,7 +161,7 @@ $(document).ready(() => {
   };
 
   var bowlsSpan = function() {
-    return allSpans[frameBowlIndex];
+    return allSpans[frameBowlIndex() - 1];
   };
 
   var totalSpan = function(indexFromEnd) {
@@ -194,6 +188,10 @@ $(document).ready(() => {
 
   var currentTotal = function() {
     return firstBowl() + secondBowl();
+  };
+
+  var frameBowlIndex = function() {
+    return scoreCardArray.length;
   };
 
   var gameOver = function() {
