@@ -53,6 +53,7 @@ $(document).ready(() => {
         firstBowlFrameTen() + secondBowlFrameTen() === 10 &&
         firstBowlFrameTen() !== 10
       ) {
+        resetButtons();
         console.log("spare, gets one more bowl");
       }
       if (firstBowlFrameTen() + secondBowlFrameTen() === 20) {
@@ -67,8 +68,8 @@ $(document).ready(() => {
         addSingleScoreToPage(0);
         scoreCardArray.push(0);
       }
-      console.log(frameBowlIndex);
       if (frameBowlIndex > 20) {
+        console.log(scoreCardArray);
         $(".button").hide();
       }
     }
