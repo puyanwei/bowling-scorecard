@@ -44,21 +44,23 @@ $(document).ready(() => {
   };
 
   var finalScore = function(bowlValue) {
+    addBonusToTotals();
     if (isTenthFrame()) {
       updateBowls(bowlValue);
-      if (firstBowlFrameTen() === 10) {
-        console.log("strike first bowl, gets two more bowls");
-      }
+      doubleStrike = false;
+      // if (firstBowlFrameTen() === 10) {
+      //   console.log("strike first bowl, gets two more bowls");
+      // }
       if (
         firstBowlFrameTen() + secondBowlFrameTen() === 10 &&
         firstBowlFrameTen() !== 10
       ) {
         resetButtons();
-        console.log("spare, gets one more bowl");
+        console.log(frameScore, "spare, gets one more bowl");
       }
-      if (firstBowlFrameTen() + secondBowlFrameTen() === 20) {
-        console.log("two strikes, one more bowl");
-      }
+      // if (firstBowlFrameTen() + secondBowlFrameTen() === 20) {
+      //   console.log("two strikes, one more bowl");
+      // }
       if (
         firstBowlFrameTen() + secondBowlFrameTen() !== 10 &&
         firstBowlFrameTen() !== 10 &&
@@ -67,9 +69,15 @@ $(document).ready(() => {
         console.log("don't get a third strike");
         addSingleScoreToPage(0);
         scoreCardArray.push(0);
+        frameScore =
+          firstBowlFrameTen() + secondBowlFrameTen() + thirdBowlFrameTen();
+        console.log(frameScore, runningTotal);
       }
       if (frameBowlIndex > 20) {
-        console.log(scoreCardArray);
+        frameScore =
+          firstBowlFrameTen() + secondBowlFrameTen() + thirdBowlFrameTen();
+
+        console.log(frameScore, runningTotal, scoreCardArray);
         $(".button").hide();
       }
     }
@@ -134,7 +142,7 @@ $(document).ready(() => {
 
   var addSpareBonus = function() {
     if (spare) {
-      var newPrevTotal = getNewPrevTotal(1) + firstBowl();
+      var newPrevTotal = getTotal(frameTotalIndex - 1) + firstBowl();
       runningTotal = newPrevTotal + currentTotal();
       addTotalToPage(newPrevTotal, 1);
       spare = false;
@@ -143,7 +151,7 @@ $(document).ready(() => {
 
   var addStrikeBonus = function() {
     if (strike) {
-      var newPrevTotal = getNewPrevTotal(1) + currentTotal();
+      var newPrevTotal = getTotal(frameTotalIndex - 1) + currentTotal();
       runningTotal = newPrevTotal + currentTotal();
       addTotalToPage(newPrevTotal, 1);
       if (firstBowl() !== 10) {
@@ -153,15 +161,15 @@ $(document).ready(() => {
   };
 
   var addDoubleStrikeBonus = function() {
-    var newPrevTwoTotal = getNewPrevTotal(2) + firstBowl();
-    var newPrevTotal = getNewPrevTotal(1) + firstBowl();
+    var newPrevTwoTotal = getTotal(frameTotalIndex - 2) + firstBowl();
+    var newPrevTotal = getTotal(frameTotalIndex - 1) + firstBowl();
     runningTotal = newPrevTotal + currentTotal();
     addTotalToPage(newPrevTwoTotal, 2);
     addTotalToPage(newPrevTotal, 1);
   };
 
-  var getNewPrevTotal = function(prevNumber) {
-    return parseInt(totalClass[frameTotalIndex - prevNumber].innerText);
+  var getTotal = function(frameTotalIndex) {
+    return parseInt(totalClass[frameTotalIndex].innerText);
   };
 
   var hideButtonsIfSumOverTen = function(bowlValue) {
