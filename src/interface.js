@@ -53,6 +53,7 @@ $(document).ready(() => {
 
   var finalScore = function() {
     if (frameBowlIndex > 20) {
+      runningTotal += thirdBowlFrameTen();
       addTotalToPage(runningTotal, 0);
       console.log(runningTotal, scoreCardArray);
       $(".button").hide();
@@ -67,7 +68,7 @@ $(document).ready(() => {
     ) {
       addSingleScoreToPage(0);
       scoreCardArray.push(0);
-      console.log(frameTenScore(), runningTotal, "don't get a third strike");
+      console.log(frameTenTotal(), runningTotal, "don't get a third strike");
     }
   };
 
@@ -213,7 +214,7 @@ $(document).ready(() => {
     return scoreCardArray[20];
   };
 
-  var frameTenScore = function() {
+  var frameTenTotal = function() {
     firstBowlFrameTen() + secondBowlFrameTen() + thirdBowlFrameTen();
   };
 
