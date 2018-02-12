@@ -12,7 +12,7 @@ $(document).ready(() => {
   $(".button").click(function() {
     var bowlValue = $(this).val();
     if (isTenthFrame()) {
-      finalScore(bowlValue);
+      frameTen(bowlValue);
     } else {
       updateBowls(bowlValue);
       updateTotals();
@@ -43,49 +43,40 @@ $(document).ready(() => {
     return frameBowlIndex > 17;
   };
 
-  var finalScore = function(bowlValue) {
+  var frameTen = function(bowlValue) {
     addBonusToTotals();
-    if (isTenthFrame()) {
-      updateBowls(bowlValue);
-      doubleStrike = false;
-      // if (firstBowlFrameTen() === 10) {
-      //   console.log("strike first bowl, gets two more bowls");
-      // }
-      if (
-        firstBowlFrameTen() + secondBowlFrameTen() === 10 &&
-        firstBowlFrameTen() !== 10
-      ) {
-        resetButtons();
-        console.log(frameScore, "spare, gets one more bowl");
-      }
-      // if (firstBowlFrameTen() + secondBowlFrameTen() === 20) {
-      //   console.log("two strikes, one more bowl");
-      // }
-      if (
-        firstBowlFrameTen() + secondBowlFrameTen() !== 10 &&
-        firstBowlFrameTen() !== 10 &&
-        secondBowlFrameTen() !== undefined
-      ) {
-        console.log("don't get a third strike");
-        addSingleScoreToPage(0);
-        scoreCardArray.push(0);
-        frameScore =
-          firstBowlFrameTen() + secondBowlFrameTen() + thirdBowlFrameTen();
-        console.log(frameScore, runningTotal);
-      }
-      if (frameBowlIndex > 20) {
-        frameScore =
-          firstBowlFrameTen() + secondBowlFrameTen() + thirdBowlFrameTen();
+    updateBowls(bowlValue);
+    doubleStrike = false;
+    frameTenNoThird();
+    frameTenSpare();
+    finalScore();
+  };
 
-        console.log(frameScore, runningTotal, scoreCardArray);
-        $(".button").hide();
-      }
+  var finalScore = function() {
+    if (frameBowlIndex > 20) {
+      console.log(runningTotal, scoreCardArray);
+      $(".button").hide();
     }
+  };
 
-    // outcomes -
-    // first is strike, get 2 more bowls
-    // first and second spare it get another bowl
-    // two strikes get another bowl
+  var frameTenNoThird = function() {
+    if (
+      firstBowlFrameTen() + secondBowlFrameTen() !== 10 &&
+      firstBowlFrameTen() !== 10 &&
+      secondBowlFrameTen() !== undefined
+    ) {
+      addSingleScoreToPage(0);
+      scoreCardArray.push(0);
+      console.log(frameTenScore(), runningTotal, "don't get a third strike");
+    }
+  };
+
+  var frameTenSpare = function() {
+    if (
+      firstBowlFrameTen() + secondBowlFrameTen() === 10 &&
+      firstBowlFrameTen() !== 10
+    ) {
+    }
   };
 
   var addBonusToTotals = function() {
@@ -219,6 +210,10 @@ $(document).ready(() => {
 
   var thirdBowlFrameTen = function() {
     return scoreCardArray[20];
+  };
+
+  var frameTenScore = function() {
+    firstBowlFrameTen() + secondBowlFrameTen() + thirdBowlFrameTen();
   };
 
   var firstBowl = function() {
