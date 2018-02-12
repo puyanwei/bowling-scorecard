@@ -53,11 +53,13 @@ $(document).ready(() => {
 
   var finalScore = function() {
     if (frameBowlIndex > 20) {
-      runningTotal += thirdBowlFrameTen();
       addTotalToPage(runningTotal, 0);
-      console.log(runningTotal, scoreCardArray);
       $(".button").hide();
     }
+  };
+
+  var frameTenBonuses = function() {
+    console.log(spare, strike, doubleStrike);
   };
 
   var frameTenNoThird = function() {
@@ -154,11 +156,13 @@ $(document).ready(() => {
   };
 
   var addDoubleStrikeBonus = function() {
-    var newPrevTwoTotal = getTotal(frameTotalIndex - 2) + firstBowl();
-    var newPrevTotal = getTotal(frameTotalIndex - 1) + firstBowl();
-    runningTotal = newPrevTotal + currentTotal();
-    addTotalToPage(newPrevTwoTotal, 2);
-    addTotalToPage(newPrevTotal, 1);
+    if (doubleStrike) {
+      var newPrevTwoTotal = getTotal(frameTotalIndex - 2) + firstBowl();
+      var newPrevTotal = getTotal(frameTotalIndex - 1) + firstBowl();
+      runningTotal = newPrevTotal + currentTotal();
+      addTotalToPage(newPrevTwoTotal, 2);
+      addTotalToPage(newPrevTotal, 1);
+    }
   };
 
   var getTotal = function(frameTotalIndex) {
