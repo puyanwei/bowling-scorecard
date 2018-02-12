@@ -46,7 +46,6 @@ $(document).ready(() => {
   var frameTen = function(bowlValue) {
     addBonusToTotals();
     updateBowls(bowlValue);
-    doubleStrike = false;
     frameTenNoThird();
     frameTenSpare();
     finalScore();
@@ -54,6 +53,7 @@ $(document).ready(() => {
 
   var finalScore = function() {
     if (frameBowlIndex > 20) {
+      addTotalToPage(runningTotal, 0);
       console.log(runningTotal, scoreCardArray);
       $(".button").hide();
     }
@@ -76,6 +76,7 @@ $(document).ready(() => {
       firstBowlFrameTen() + secondBowlFrameTen() === 10 &&
       firstBowlFrameTen() !== 10
     ) {
+      $(".button").show();
     }
   };
 
