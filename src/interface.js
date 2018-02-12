@@ -84,15 +84,9 @@ $(document).ready(() => {
   };
 
   var addBonusToTotals = function() {
-    if (spare) {
-      addSpareBonus();
-    }
-    if (strike) {
-      addStrikeBonus();
-    }
-    if (doubleStrike) {
-      addDoubleStrikeBonus();
-    }
+    addSpareBonus();
+    addStrikeBonus();
+    addDoubleStrikeBonus();
   };
 
   var addBowlsToTotal = function() {
