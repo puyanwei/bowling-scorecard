@@ -1,6 +1,7 @@
 describe("#Game", function() {
   beforeEach(function() {
     game = new Game();
+    bowl = new Bowl();
   });
 
   describe("#initialize", function() {
@@ -18,6 +19,15 @@ describe("#Game", function() {
     });
     it("strike variable starts as false", function() {
       expect(game.strike).toBe(false);
+    });
+  });
+
+  describe("#addBowl", function() {
+    it("adds a bowl object into scoreArray", function() {
+      game.addBowl(5);
+      game.addBowl(2);
+      var arrayLength = game.scoreCardArray.length;
+      expect(arrayLength).toEqual(2);
     });
   });
 });
