@@ -1,1 +1,3 @@
-function Bowl() {}
+function Bowl(bowlValue) {
+  this.bowl = bowlValue;
+}
