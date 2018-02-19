@@ -32,4 +32,12 @@ describe("#Game", function() {
       expect((game.scorecard[1].value = 3));
     });
   });
+
+  describe("#addFrameScore", function() {
+    it("adds the frame total to the frameScores array", function() {
+      game.addBowl(5);
+      game.addBowl(2);
+      expect(game.frameScores).toEqual(7);
+    });
+  });
 });
