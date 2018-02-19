@@ -37,7 +37,8 @@ describe("#Game", function() {
     it("adds the frame total to the frameScores array", function() {
       game.addBowl(5);
       game.addBowl(2);
-      expect(game.frameScores).toEqual(7);
+      game.addFrameScore();
+      expect(game.frameScores).toEqual([7]);
     });
   });
 });
