@@ -17,6 +17,6 @@ Game.prototype.addBowl = function(bowlValue) {
 Game.prototype.addFrameScore = function() {
   for (let i = 0; i < this.scorecard.length; i += 2) {
     var total = this.scorecard[i].value + this.scorecard[i + 1].value;
+    this.frameScores.push(total);
   }
-  this.frameScores.push(total);
 };
