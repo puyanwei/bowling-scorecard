@@ -1,7 +1,7 @@
 function Game() {
   this.frameTotalIndex = 0;
   this.frameBowlIndex = 0;
-  this.scoreCardArray = [];
+  this.scorecard = [];
   this.frameScores = [];
   this.spare = false;
   this.strike = false;
@@ -11,6 +11,5 @@ function Game() {
 
 Game.prototype.addBowl = function(bowlValue) {
   bowl = new Bowl(bowlValue);
-  this.scoreCardArray.push(bowl);
-  console.log(this.scoreCardArray);
+  this.scorecard.push(bowl);
 };

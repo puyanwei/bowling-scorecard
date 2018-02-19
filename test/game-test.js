@@ -6,7 +6,7 @@ describe("#Game", function() {
 
   describe("#initialize", function() {
     it("bowls array to start out empty", function() {
-      expect(game.scoreCardArray).toEqual([]);
+      expect(game.scorecard).toEqual([]);
     });
     it("frameScores array to start out empty", function() {
       expect(game.frameScores).toEqual([]);
@@ -26,8 +26,10 @@ describe("#Game", function() {
     it("adds a bowl object into scoreArray", function() {
       game.addBowl(5);
       game.addBowl(2);
-      var arrayLength = game.scoreCardArray.length;
+      var arrayLength = game.scorecard.length;
       expect(arrayLength).toEqual(2);
+      expect((game.scorecard[0].value = 5));
+      expect((game.scorecard[1].value = 3));
     });
   });
 });
