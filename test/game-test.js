@@ -33,12 +33,24 @@ describe("#Game", function() {
     });
   });
 
-  describe("#updateFrameScore", function() {
-    it("updates the frame total to the frameScores array", function() {
+  describe("#addFrameScore", function() {
+    it("adds the frame totals to the frameScores array", function() {
       game.addBowl(5);
       game.addBowl(2);
       game.addBowl(4);
       game.addBowl(4);
+      game.addFrameScore();
+      expect(game.frameScores).toEqual([7, 8]);
+    });
+  });
+
+  describe("#updateFrameScore", function() {
+    it("updates the frame totals by adding up the previous frame's total", function() {
+      game.addBowl(5);
+      game.addBowl(2);
+      game.addBowl(4);
+      game.addBowl(4);
+      game.addFrameScore();
       game.updateFrameScore();
       expect(game.frameScores).toEqual([7, 8]);
     });
