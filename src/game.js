@@ -20,3 +20,11 @@ Game.prototype.addFrameScore = function() {
     this.frameScores.push(total);
   }
 };
+
+Game.prototype.updateTotals = function() {
+  if (this.frameScores.length > 0) {
+    for (var i = 1; i < this.frameScores.length; i++) {
+      this.frameScores[i] += this.frameScores[i - 1];
+    }
+  }
+};
