@@ -46,9 +46,9 @@ describe("#Game", function() {
 
   describe("#updateTotals", function() {
     it("updates the frame totals by adding up the previous frame's total", function() {
-      game.frameScores = [7, 8];
+      game.frameScores = [7, 8, 12];
       game.updateTotals();
-      expect(game.frameScores).toEqual([7, 15]);
+      expect(game.frameScores).toEqual([7, 15, 27]);
     });
   });
 });
