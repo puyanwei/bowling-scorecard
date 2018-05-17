@@ -1,26 +1,26 @@
 {
-  "name": "bowling-challenge",
-  "version": "1.0.0",
-  "description": "Bowling Scorecard Interface",
-  "main": "index.js",
-  "dependencies": {
-    "http-server": "^0.11.1"
-  },
-  "scripts": {
-    "test": "cypress open",
-    "start": "http-server"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/puyanwei/bowling-scorecard.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/puyanwei/bowling-scorecard/issues"
-  },
-  "homepage": "https://github.com/puyanwei/bowling-scorecard#readme",
-  "devDependencies": {
-    "cypress": "^2.1.0"
-  }
+    "name": "bowling-challenge",
+    "version": "1.0.0",
+    "description": "Bowling Scorecard Interface",
+    "main": "index.js",
+    "dependencies": {
+        "http-server": "^0.11.1"
+    },
+    "scripts": {
+        "test": "cypress run",
+        "start": "http-server"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/puyanwei/bowling-scorecard.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/puyanwei/bowling-scorecard/issues"
+    },
+    "homepage": "https://github.com/puyanwei/bowling-scorecard#readme",
+    "devDependencies": {
+        "cypress": "^2.1.0"
+    }
 }
