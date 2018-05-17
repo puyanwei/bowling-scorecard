@@ -1,25 +1,26 @@
 table {
-  border-collapse: collapse;
-  border: 1px solid black;
+    border-collapse: collapse;
+    border: 1px solid black;
 }
 
 th {
-  border: 1px solid black;
+    border: 1px solid black;
 }
 
 td {
-  text-align: center;
-  height: 100px;
-  width: 100px;
-  border: 1px solid black;
+    text-align: center;
+    height: 100px;
+    width: 100px;
+    border: 1px solid black;
 }
 
 .innercell {
-  height: 50px;
-  width: 50px;
+    height: 50px;
+    width: 50px;
 }
 
 input {
-  width: 50px;
-  height: 25px;
+    width: 50px;
+    height: 25px;
+    background: border-box;
 }
