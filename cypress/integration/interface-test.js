@@ -13,10 +13,13 @@ describe('Check Title', () => {
 
 describe('Click button', () => {
     it('Click the button', () => {
-        cy.visit('http://localhost:8080/');
-        cy.get('#0').click();
-        cy.get('#3').click();
-        cy.get('#5').click();
-        cy.get('#5').click();
+        cy
+            .visit('http://localhost:8080/')
+            .get('#0')
+            .click()
+            .get('#3')
+            .click()
+            .get('.total')
+            .contains('3');
     });
 });
