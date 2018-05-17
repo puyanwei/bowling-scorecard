@@ -1,20 +1,23 @@
-$(document).ready(() => {
-    game = new Game();
-    var allSpans = $('span');
-    var totalClass = $('.total');
+'use strict';
+
+$(window).on('load', () => {
+    const allSpans = $('span');
+    const totalClass = $('.total');
+
+    let game = new Game();
 
     $('.button').click(function() {
-        var bowlValue = $(this).val();
+        let bowlValue = $(this).val();
         game.addBowl(bowlValue);
-        if (isTenthFrame()) {
-            frameTen(bowlValue);
-        } else {
-            updateBowls(bowlValue);
-            updateTotals();
-        }
+        // if (isTenthFrame()) {
+        //     frameTen(bowlValue);
+        // } else {
+        updateBowls(bowlValue);
+        updateTotals();
+        // }
     });
 
-    var updateBowls = function(bowlValue) {
+    let updateBowls = function(bowlValue) {
         bowlValue = parseInt(bowlValue);
         game.scorecard.push(bowlValue);
         hideButtonsIfSumOverTen(bowlValue);
@@ -23,7 +26,7 @@ $(document).ready(() => {
         game.frameBowlIndex++;
     };
 
-    var updateTotals = function() {
+    let updateTotals = function() {
         if (isEven(game.frameBowlIndex)) {
             addBowlsToTotal();
             addBonusToTotals();
@@ -34,11 +37,11 @@ $(document).ready(() => {
         }
     };
 
-    var isTenthFrame = function() {
+    let isTenthFrame = function() {
         return game.frameBowlIndex > 17;
     };
 
-    var frameTen = function(bowlValue) {
+    let frameTen = function(bowlValue) {
         addBonusToTotals();
         updateBowls(bowlValue);
         frameTenNoThird();
@@ -46,18 +49,18 @@ $(document).ready(() => {
         finalScore();
     };
 
-    var finalScore = function() {
+    let finalScore = function() {
         if (game.frameBowlIndex > 20) {
             addTotalToPage(game.runningTotal, 0);
             $('.button').hide();
         }
     };
 
-    var frameTenBonuses = function() {
+    let frameTenBonuses = function() {
         console.log(game.spare, strike, doubleStrike);
     };
 
-    var frameTenNoThird = function() {
+    let frameTenNoThird = function() {
         if (
             firstBowlFrameTen() + secondBowlFrameTen() !== 10 &&
             firstBowlFrameTen() !== 10 &&
@@ -73,7 +76,7 @@ $(document).ready(() => {
         }
     };
 
-    var frameTenSpare = function() {
+    let frameTenSpare = function() {
         if (
             firstBowlFrameTen() + secondBowlFrameTen() === 10 &&
             firstBowlFrameTen() !== 10
@@ -82,41 +85,41 @@ $(document).ready(() => {
         }
     };
 
-    var addBonusToTotals = function() {
+    let addBonusToTotals = function() {
         addSpareBonus();
         addStrikeBonus();
         addDoubleStrikeBonus();
     };
 
-    var addBowlsToTotal = function() {
+    let addBowlsToTotal = function() {
         game.runningTotal += currentTotal();
     };
 
-    var spareOrStrikeChecker = function() {
+    let spareOrStrikeChecker = function() {
         isStrike();
         isSpare();
         isDoubleStrike();
     };
 
-    var isSpare = function() {
+    let isSpare = function() {
         if (currentTotal() === 10 && secondBowl() !== 0) {
             game.spare = true;
         }
     };
 
-    var isStrike = function() {
-        if (firstBowl() === 10) {
+    let isStrike = function() {
+        if (game.firstBowl() === 10) {
             strike = true;
         }
     };
 
-    var isDoubleStrike = function() {
-        if (firstBowl() === 10 && prevFirstBowl() === 10) {
+    let isDoubleStrike = function() {
+        if (game.firstBowl() === 10 && prevFirstBowl() === 10) {
             doubleStrike = true;
         }
     };
 
-    var ifStrikeNextBowlZero = function(bowlValue) {
+    let ifStrikeNextBowlZero = function(bowlValue) {
         if (
             bowlValue === 10 &&
             isEven(game.frameBowlIndex) &&
@@ -126,50 +129,51 @@ $(document).ready(() => {
         }
     };
 
-    var nextBowlZero = function() {
+    let nextBowlZero = function() {
         game.frameBowlIndex++;
         addSingleScoreToPage(0);
         game.scorecard.push(0);
     };
 
-    var addSpareBonus = function() {
+    let addSpareBonus = function() {
         if (game.spare) {
-            var newPrevTotal = getTotal(frameTotalIndex - 1) + firstBowl();
+            let newPrevTotal = getTotal(frameTotalIndex - 1) + game.firstBowl();
             game.runningTotal = newPrevTotal + currentTotal();
             addTotalToPage(newPrevTotal, 1);
             game.spare = false;
         }
     };
 
-    var addStrikeBonus = function() {
+    let addStrikeBonus = function() {
         if (game.strike) {
-            var newPrevTotal = getTotal(frameTotalIndex - 1) + currentTotal();
+            let newPrevTotal = getTotal(frameTotalIndex - 1) + currentTotal();
             game.runningTotal = newPrevTotal + currentTotal();
             addTotalToPage(newPrevTotal, 1);
-            if (firstBowl() !== 10) {
+            if (game.firstBowl() !== 10) {
                 game.strike = false;
             }
         }
     };
 
-    var addDoubleStrikeBonus = function() {
+    let addDoubleStrikeBonus = function() {
         if (game.doubleStrike) {
-            var newPrevTwoTotal = getTotal(frameTotalIndex - 2) + firstBowl();
-            var newPrevTotal = getTotal(frameTotalIndex - 1) + firstBowl();
+            let newPrevTwoTotal =
+                getTotal(frameTotalIndex - 2) + game.firstBowl();
+            let newPrevTotal = getTotal(frameTotalIndex - 1) + game.firstBowl();
             game.runningTotal = newPrevTotal + currentTotal();
             addTotalToPage(newPrevTwoTotal, 2);
             addTotalToPage(newPrevTotal, 1);
         }
     };
 
-    var getTotal = function(frameTotalIndex) {
+    let getTotal = function(frameTotalIndex) {
         return parseInt(totalClass[frameTotalIndex].innerText);
     };
 
-    var hideButtonsIfSumOverTen = function(bowlValue) {
+    let hideButtonsIfSumOverTen = function(bowlValue) {
         if (bowlValue !== 10) {
-            var remainingPins = 10 - bowlValue;
-            var array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+            let remainingPins = 10 - bowlValue;
+            let array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
             array.forEach(function(value) {
                 if (value > remainingPins) {
@@ -179,69 +183,58 @@ $(document).ready(() => {
         }
     };
 
-    var resetButtons = function() {
+    let resetButtons = function() {
         $('.button').show();
     };
 
-    var isEven = function(number) {
+    let isEven = function(number) {
         return number % 2 == 0;
     };
 
-    var addSingleScoreToPage = function(bowlValue) {
+    let addSingleScoreToPage = function(bowlValue) {
         bowlsSpan().innerText = bowlValue;
     };
 
-    var addTotalToPage = function(total, indexFromEnd) {
+    let addTotalToPage = function(total, indexFromEnd) {
         totalSpan(indexFromEnd).innerText = total;
     };
 
-    var bowlsSpan = function() {
+    let bowlsSpan = function() {
         return allSpans[game.frameBowlIndex];
     };
 
-    var totalSpan = function(indexFromEnd) {
+    let totalSpan = function(indexFromEnd) {
         return totalClass[game.frameTotalIndex - indexFromEnd];
     };
 
-    var firstBowlFrameTen = function() {
+    let firstBowlFrameTen = function() {
         return game.scorecard[18];
     };
 
-    var secondBowlFrameTen = function() {
+    let secondBowlFrameTen = function() {
         return game.scorecard[19];
     };
 
-    var thirdBowlFrameTen = function() {
+    let thirdBowlFrameTen = function() {
         return game.scorecard[20];
     };
 
-    var frameTenTotal = function() {
+    let frameTenTotal = function() {
         firstBowlFrameTen() + secondBowlFrameTen() + thirdBowlFrameTen();
     };
 
-    var firstBowl = function() {
-        return bowlIndexFromLast(2);
+    let prevFirstBowl = function() {
+        return game.scorecard[game.scorecard.length - 4].value;
     };
-    var secondBowl = function() {
-        return bowlIndexFromLast(1);
-    };
-
-    var prevFirstBowl = function() {
-        return bowlIndexFromLast(4);
-    };
-    var prevSecondBowl = function() {
-        return bowlIndexFromLast(3);
+    let prevSecondBowl = function() {
+        return game.scorecard[game.scorecard.length - 3].value;
     };
 
-    var bowlIndexFromLast = function(index) {
-        return game.scorecard[game.scorecard.length - index];
+    let currentTotal = function() {
+        return game.firstBowl() + game.secondBowl();
     };
 
-    var currentTotal = function() {
-        return firstBowl() + secondBowl();
-    };
-
-    var gameOver = function() {
+    let gameOver = function() {
         if (game.scorecard.length > 20) {
             $('.button').hide();
         }

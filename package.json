@@ -21,6 +21,7 @@
     },
     "homepage": "https://github.com/puyanwei/bowling-scorecard#readme",
     "devDependencies": {
-        "cypress": "^2.1.0"
+        "cypress": "^2.1.0",
+        "jquery": "^3.3.1"
     }
 }

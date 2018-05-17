@@ -10,21 +10,29 @@ function Game() {
 }
 
 Game.prototype.addBowl = function(bowlValue) {
-    bowl = new Bowl(bowlValue);
+    let bowl = new Bowl(bowlValue);
     this.scorecard.push(bowl);
 };
 
 Game.prototype.addFrameScore = function() {
     for (let i = 0; i < this.scorecard.length; i += 2) {
-        var total = this.scorecard[i].value + this.scorecard[i + 1].value;
+        let total = this.scorecard[i].value + this.scorecard[i + 1].value;
         this.frameScores.push(total);
     }
 };
 
 Game.prototype.updateTotals = function() {
     if (this.frameScores.length > 0) {
-        for (var i = 1; i < this.frameScores.length; i++) {
+        for (let i = 1; i < this.frameScores.length; i++) {
             this.frameScores[i] += this.frameScores[i - 1];
         }
     }
+};
+
+Game.prototype.firstBowl = function() {
+    return this.scorecard[0].value;
+};
+
+Game.prototype.secondBowl = function() {
+    return this.scorecard[1].value;
 };
