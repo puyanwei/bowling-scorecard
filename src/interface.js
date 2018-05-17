@@ -8,7 +8,6 @@ $(window).on('load', () => {
 
     $('.button').click(function() {
         let bowlValue = $(this).val();
-        game.addBowl(bowlValue);
         // if (isTenthFrame()) {
         //     frameTen(bowlValue);
         // } else {
@@ -19,7 +18,7 @@ $(window).on('load', () => {
 
     let updateBowls = function(bowlValue) {
         bowlValue = parseInt(bowlValue);
-        game.scorecard.push(bowlValue);
+        game.addBowl(bowlValue);
         hideButtonsIfSumOverTen(bowlValue);
         addSingleScoreToPage(bowlValue);
         ifStrikeNextBowlZero(bowlValue);
@@ -102,7 +101,7 @@ $(window).on('load', () => {
     };
 
     let isSpare = function() {
-        if (currentTotal() === 10 && secondBowl() !== 0) {
+        if (currentTotal() === 10 && this.secondBowl() !== 0) {
             game.spare = true;
         }
     };

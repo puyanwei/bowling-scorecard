@@ -12,6 +12,7 @@ function Game() {
 Game.prototype.addBowl = function(bowlValue) {
     let bowl = new Bowl(bowlValue);
     this.scorecard.push(bowl);
+    console.log(this.scorecard);
 };
 
 Game.prototype.addFrameScore = function() {
