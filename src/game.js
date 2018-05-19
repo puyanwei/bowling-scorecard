@@ -1,5 +1,7 @@
 class Game {
     constructor() {
+        this.allSpans = $('span');
+        this.totalClass = $('.total');
         this.frameTotalIndex = 0;
         this.frameBowlIndex = 0;
         this.scorecard = [];
@@ -17,7 +19,7 @@ class Game {
     }
 
     addFrameScore() {
-        for (let i = 0; i < this.scorecard.length; i += 2) {
+        for (i = 0; i < this.scorecard.length; i += 2) {
             const total = this.scorecard[i].value + this.scorecard[i + 1].value;
             this.frameScores.push(total);
         }
@@ -31,11 +33,198 @@ class Game {
         }
     }
 
+    isTenthFrame() {
+        return this.frameBowlIndex > 17;
+    }
+
+    finalScore() {
+        if (this.frameBowlIndex > 20) {
+            addTotalToPage(this.runningTotal, 0);
+            $('.button').hide();
+        }
+    }
+
+    frameTenBonuses() {
+        console.log(this.spare, strike, doubleStrike);
+    }
+
+    frameTenSpare() {
+        if (
+            this.firstBowlFrameTen() + this.secondBowlFrameTen() === 10 &&
+            this.firstBowlFrameTen() !== 10
+        ) {
+            $('.button').show();
+        }
+    }
+
+    addBonusToTotals() {
+        this.addSpareBonus();
+        this.addStrikeBonus();
+        this.addDoubleStrikeBonus();
+    }
+
+    addBowlsToTotal() {
+        this.runningTotal += this.currentTotal();
+    }
+
+    spareOrStrikeChecker() {
+        this.isStrike();
+        this.isSpare();
+        this.isDoubleStrike();
+    }
+
+    isSpare() {
+        if (this.currentTotal() === 10 && this.secondBowl() !== 0) {
+            this.spare = true;
+        }
+    }
+
+    isStrike() {
+        if (this.firstBowl() === 10) {
+            this.strike = true;
+        }
+    }
+
+    isDoubleStrike() {
+        if (this.firstBowl() === 10 && prevFirstBowl() === 10) {
+            doubleStrike = true;
+        }
+    }
+
+    ifStrikeNextBowlZero(bowlValue) {
+        if (
+            bowlValue === 10 &&
+            this.isEven(this.frameBowlIndex) &&
+            !this.isTenthFrame()
+        ) {
+            this.nextBowlZero();
+        }
+    }
+
+    nextBowlZero() {
+        this.frameBowlIndex++;
+        this.addSingleScoreToPage(0);
+        this.scorecard.push(0);
+    }
+
+    addSpareBonus() {
+        if (this.spare) {
+            const newPrevTotal =
+                this.getTotal(this.frameTotalIndex - 1) + this.firstBowl();
+            this.runningTotal = newPrevTotal + this.currentTotal();
+            this.addTotalToPage(newPrevTotal, 1);
+            this.spare = false;
+        }
+    }
+
+    addStrikeBonus() {
+        if (this.strike) {
+            const newPrevTotal =
+                this.getTotal(frameTotalIndex - 1) + this.currentTotal();
+            this.runningTotal = newPrevTotal + this.currentTotal();
+            addTotalToPage(newPrevTotal, 1);
+            if (this.firstBowl() !== 10) {
+                this.strike = false;
+            }
+        }
+    }
+
+    addDoubleStrikeBonus() {
+        if (this.doubleStrike) {
+            const newPrevTwoTotal =
+                getTotal(frameTotalIndex - 2) + this.firstBowl();
+            const newPrevTotal =
+                getTotal(frameTotalIndex - 1) + this.firstBowl();
+            this.runningTotal = newPrevTotal + this.currentTotal();
+            addTotalToPage(newPrevTwoTotal, 2);
+            addTotalToPage(newPrevTotal, 1);
+        }
+    }
+
+    getTotal(frameTotalIndex) {
+        return parseInt(this.totalClass[frameTotalIndex].innerText);
+    }
+
+    hideButtonsIfSumOverTen(bowlValue) {
+        if (bowlValue !== 10) {
+            const remainingPins = 10 - bowlValue;
+            const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+
+            array.forEach((value) => {
+                if (value > remainingPins) {
+                    $(`#${value}`).hide();
+                }
+            });
+        }
+    }
+
+    resetButtons() {
+        $('.button').show();
+    }
+
+    isEven(number) {
+        return number % 2 == 0;
+    }
+
+    addSingleScoreToPage(bowlValue) {
+        this.bowlsSpan().innerText = bowlValue;
+    }
+
+    addTotalToPage(total, indexFromEnd) {
+        this.totalSpan(indexFromEnd).innerText = total;
+    }
+
+    bowlsSpan() {
+        return this.allSpans[this.frameBowlIndex];
+    }
+
+    totalSpan(indexFromEnd) {
+        return this.totalClass[this.frameTotalIndex - indexFromEnd];
+    }
+
+    firstBowlFrameTen() {
+        return this.scorecard[18];
+    }
+
+    secondBowlFrameTen() {
+        return this.scorecard[19];
+    }
+
+    thirdBowlFrameTen() {
+        return this.scorecard[20];
+    }
+
+    frameTenTotal() {
+        firstBowlFrameTen() + secondBowlFrameTen() + thirdBowlFrameTen();
+    }
+
+    gameOver() {
+        if (this.scorecard.length > 20) {
+            $('.button').hide();
+        }
+    }
+
     firstBowl() {
-        return this.scorecard[0].value;
+        return this.scorecard[this.numberOfBowls() - 1].value;
     }
 
     secondBowl() {
-        return this.scorecard[1].value;
+        return this.scorecard[this.numberOfBowls() - 2].value;
+    }
+
+    prevFirstBowl() {
+        return this.scorecard[this.numberOfBowls() - 4].value;
+    }
+
+    prevSecondBowl() {
+        return this.scorecard[this.numberOfBowls() - 3].value;
+    }
+
+    currentTotal() {
+        return this.firstBowl() + this.secondBowl();
+    }
+
+    numberOfBowls() {
+        return this.scorecard.length;
     }
 }
