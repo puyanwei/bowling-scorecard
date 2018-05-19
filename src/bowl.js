@@ -1,6 +1,7 @@
 class Bowl {
-    constructor(value) {
+    constructor(value, bowlNumber) {
         this.value = value;
+        this.bowlNumber = bowlNumber;
         this.spare = false;
         this.strike = false;
     }

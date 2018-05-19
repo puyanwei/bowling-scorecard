@@ -4,6 +4,7 @@ class Game {
         this.totalClass = document.getElementsByClassName('total');
         this.frameTotalIndex = 0;
         this.frameBowlIndex = 0;
+        this.bowlNumber = 0;
         this.scorecard = [];
         this.frameScores = [];
         this.spare = false;
@@ -13,9 +14,10 @@ class Game {
     }
 
     addBowl(bowlValue) {
-        const bowl = new Bowl(bowlValue);
+        this.bowlNumber++;
+        console.log(this.scorecard, this.bowlNumber);
+        const bowl = new Bowl(bowlValue, this.bowlNumber);
         this.scorecard.push(bowl);
-        console.log(this.scorecard);
     }
 
     addFrameScore() {
