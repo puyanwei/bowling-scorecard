@@ -1,3 +1,5 @@
-function Bowl(value) {
-  this.value = value;
+class Bowl {
+    constructor(value) {
+        this.value = value;
+    }
 }
