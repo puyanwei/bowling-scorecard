@@ -9,7 +9,7 @@ $(window).on('load', () => {
         updateTotals();
     });
 
-    let updateBowls = function(bowlValue) {
+    const updateBowls = function(bowlValue) {
         bowlValue = parseInt(bowlValue);
         game.addBowl(bowlValue);
         hideButtonsIfSumOverTen(bowlValue);
@@ -18,7 +18,7 @@ $(window).on('load', () => {
         game.frameBowlIndex++;
     };
 
-    let updateTotals = function() {
+    const updateTotals = function() {
         if (game.isEven(game.frameBowlIndex)) {
             game.addBowlsToTotal();
             game.addBonusToTotals();
@@ -28,21 +28,12 @@ $(window).on('load', () => {
             game.frameTotalIndex++;
         }
     };
-    //
-    // frameTenSpare() {
-    //     if (
-    //         this.firstBowlFrameTen() + this.secondBowlFrameTen() === 10 &&
-    //         this.firstBowlFrameTen() !== 10
-    //     ) {
-    //         $('.button').show();
-    //     }
-    // }
 
-    let resetButtons = function() {
+    const resetButtons = function() {
         $('.button').show();
     };
 
-    let hideButtonsIfSumOverTen = function(bowlValue) {
+    const hideButtonsIfSumOverTen = function(bowlValue) {
         if (bowlValue !== 10) {
             const remainingPins = 10 - bowlValue;
             const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -55,9 +46,19 @@ $(window).on('load', () => {
         }
     };
 
-    let gameOver = function() {
+    const gameOver = function() {
         if (this.scorecard.length > 20) {
             $('.button').hide();
         }
     };
 });
+
+//
+// frameTenSpare() {
+//     if (
+//         this.firstBowlFrameTen() + this.secondBowlFrameTen() === 10 &&
+//         this.firstBowlFrameTen() !== 10
+//     ) {
+//         $('.button').show();
+//     }
+// }
