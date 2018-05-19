@@ -1,7 +1,7 @@
 class Game {
     constructor() {
-        this.allSpans = $('span');
-        this.totalClass = $('.total');
+        this.allSpans = document.getElementsByTagName('span');
+        this.totalClass = document.getElementsByClassName('total');
         this.frameTotalIndex = 0;
         this.frameBowlIndex = 0;
         this.scorecard = [];
@@ -19,7 +19,7 @@ class Game {
     }
 
     addFrameScore() {
-        for (i = 0; i < this.scorecard.length; i += 2) {
+        for (let i = 0; i < this.scorecard.length; i += 2) {
             const total = this.scorecard[i].value + this.scorecard[i + 1].value;
             this.frameScores.push(total);
         }
@@ -40,21 +40,12 @@ class Game {
     finalScore() {
         if (this.frameBowlIndex > 20) {
             addTotalToPage(this.runningTotal, 0);
-            $('.button').hide();
+            document.getElementsByClassName('total').hide();
         }
     }
 
     frameTenBonuses() {
         console.log(this.spare, strike, doubleStrike);
-    }
-
-    frameTenSpare() {
-        if (
-            this.firstBowlFrameTen() + this.secondBowlFrameTen() === 10 &&
-            this.firstBowlFrameTen() !== 10
-        ) {
-            $('.button').show();
-        }
     }
 
     addBonusToTotals() {
@@ -145,23 +136,6 @@ class Game {
         return parseInt(this.totalClass[frameTotalIndex].innerText);
     }
 
-    hideButtonsIfSumOverTen(bowlValue) {
-        if (bowlValue !== 10) {
-            const remainingPins = 10 - bowlValue;
-            const array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-
-            array.forEach((value) => {
-                if (value > remainingPins) {
-                    $(`#${value}`).hide();
-                }
-            });
-        }
-    }
-
-    resetButtons() {
-        $('.button').show();
-    }
-
     isEven(number) {
         return number % 2 == 0;
     }
@@ -196,12 +170,6 @@ class Game {
 
     frameTenTotal() {
         firstBowlFrameTen() + secondBowlFrameTen() + thirdBowlFrameTen();
-    }
-
-    gameOver() {
-        if (this.scorecard.length > 20) {
-            $('.button').hide();
-        }
     }
 
     firstBowl() {
