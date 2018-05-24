@@ -15,11 +15,11 @@ describe('Click button', () => {
     it('Click the button', () => {
         cy
             .visit('http://localhost:8080/')
-            .get('#0')
+            .get('#Btn0')
             .click()
-            .get('#3')
+            .get('#Btn3')
             .click()
-            .get('.total')
+            .get('#totalOne')
             .contains('3');
     });
 });
