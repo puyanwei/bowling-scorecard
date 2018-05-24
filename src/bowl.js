@@ -4,5 +4,6 @@ class Bowl {
         this.bowlNumber = bowlNumber;
         this.spare = false;
         this.strike = false;
+        this.doubleStrike = false;
     }
 }

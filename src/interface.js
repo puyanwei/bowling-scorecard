@@ -15,11 +15,11 @@ $(window).on('load', () => {
         hideButtonsIfSumOverTen(bowlValue);
         game.addSingleScoreToPage(bowlValue);
         game.ifStrikeNextBowlZero(bowlValue);
-        game.frameBowlIndex++;
+        game.bowlIndex++;
     };
 
     const updateTotals = function() {
-        if (game.isEven(game.frameBowlIndex)) {
+        if (game.isEven(game.bowlIndex)) {
             game.addBowlsToTotal();
             game.addBonusToTotals();
             game.addTotalToPage(game.runningTotal, 0);

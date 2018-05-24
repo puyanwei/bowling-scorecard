@@ -3,19 +3,17 @@ class Game {
         this.allSpans = document.getElementsByTagName('span');
         this.totalClass = document.getElementsByClassName('total');
         this.frameTotalIndex = 0;
-        this.frameBowlIndex = 0;
+        this.bowlIndex = 0;
         this.bowlNumber = 0;
         this.scorecard = [];
         this.frameScores = [];
         this.spare = false;
         this.strike = false;
-        this.doubleStrike = false;
         this.runningTotal = 0;
     }
 
     addBowl(bowlValue) {
         this.bowlNumber++;
-        console.log(this.scorecard, this.bowlNumber);
         const bowl = new Bowl(bowlValue, this.bowlNumber);
         this.scorecard.push(bowl);
     }
@@ -36,11 +34,11 @@ class Game {
     }
 
     isTenthFrame() {
-        return this.frameBowlIndex > 17;
+        return this.bowlIndex > 17;
     }
 
     finalScore() {
-        if (this.frameBowlIndex > 20) {
+        if (this.bowlIndex > 20) {
             addTotalToPage(this.runningTotal, 0);
             document.getElementsByClassName('total').hide();
         }
@@ -87,7 +85,7 @@ class Game {
     ifStrikeNextBowlZero(bowlValue) {
         if (
             bowlValue === 10 &&
-            this.isEven(this.frameBowlIndex) &&
+            this.isEven(this.bowlIndex) &&
             !this.isTenthFrame()
         ) {
             this.nextBowlZero();
@@ -95,7 +93,7 @@ class Game {
     }
 
     nextBowlZero() {
-        this.frameBowlIndex++;
+        this.bowlIndex++;
         this.addSingleScoreToPage(0);
         this.scorecard.push(0);
     }
@@ -151,7 +149,7 @@ class Game {
     }
 
     bowlsSpan() {
-        return this.allSpans[this.frameBowlIndex];
+        return this.allSpans[this.bowlIndex];
     }
 
     totalSpan(indexFromEnd) {

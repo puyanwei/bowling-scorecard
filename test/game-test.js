@@ -51,4 +51,13 @@ describe('#Game', () => {
             expect(game.frameScores).toEqual([7, 15, 27]);
         });
     });
+
+    describe('#isTenthFrame', () => {
+        it("returns true if it is the tenth frame", () => {
+            game.bowlIndex = 17;
+            expect(game.isTenthFrame()).toBe(false);
+            game.bowlIndex = 18;
+            expect(game.isTenthFrame()).toBe(true);
+        });
+    });
 });
